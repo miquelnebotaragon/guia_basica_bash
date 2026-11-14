@@ -1,0 +1,1103 @@
+<h1 id="-hoja-de-referencia-de-comandos-data-sheet">🧾 Hoja de
+referencia de comandos (Data Sheet)</h1>
+<blockquote>
+<p>Guía de iniciación a la consola de comandos de Linux para docentes.
+Esta hoja reúne, en una sola página, <strong>todos los comandos y
+atajos</strong> vistos en los 12 módulos. Está pensada para imprimir o
+tener a mano mientras se practica.</p>
+</blockquote>
+<p>Convenciones:</p>
+<ul>
+<li><code>comando</code> → palabra literal que escribes.</li>
+<li><code>[archivo]</code>, <code>[ruta]</code>, <code>[dir]</code> →
+sustituye por tu archivo, ruta o directorio.</li>
+<li><code>|</code> → tubería: conecta la salida de un comando con la
+entrada del siguiente.</li>
+<li>Las opciones pueden combinarse: <code>ls -lh</code> =
+<code>ls -l</code> + <code>ls -h</code>.</li>
+</ul>
+<hr />
+<h2 id="1-la-consola-la-shell-y-las-redirecciones-módulo-01">1. La
+consola, la shell y las redirecciones (Módulo 01)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando / Operador</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>echo</code></td>
+<td style="text-align: left;">Muestra un texto o el valor de una
+variable</td>
+<td style="text-align: left;"><code>echo $SHELL</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ls</code></td>
+<td style="text-align: left;">Lista el contenido de un directorio</td>
+<td
+style="text-align: left;"><code>ls /home/usuario/Descargas</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>man</code></td>
+<td style="text-align: left;">Abre el manual de un comando</td>
+<td style="text-align: left;"><code>man cat</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Muestra el contenido de un archivo</td>
+<td style="text-align: left;"><code>cat archivo.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep</code></td>
+<td style="text-align: left;">Busca un texto dentro de un archivo o de
+una entrada</td>
+<td
+style="text-align: left;"><code>grep eth0 &lt; interfaces.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>&gt;</code></td>
+<td style="text-align: left;">Redirige STDOUT a un archivo
+(sobrescribe)</td>
+<td style="text-align: left;"><code>ls ~ &gt; listado.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>&gt;&gt;</code></td>
+<td style="text-align: left;">Añade STDOUT al final de un archivo</td>
+<td
+style="text-align: left;"><code>ls ~ &gt;&gt; listado.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>2&gt;</code></td>
+<td style="text-align: left;">Redirige STDERR a un archivo</td>
+<td
+style="text-align: left;"><code>ls foto.png 2&gt; error.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>&amp;&gt;</code></td>
+<td style="text-align: left;">Redirige STDOUT y STDERR al mismo
+archivo</td>
+<td style="text-align: left;"><code>ls ~ &amp;&gt; todo.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>&lt;</code></td>
+<td style="text-align: left;">Usa un archivo como STDIN</td>
+<td
+style="text-align: left;"><code>grep eth0 &lt; interfaces.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>/dev/null</code></td>
+<td style="text-align: left;">"Papelera" donde descartar salidas</td>
+<td
+style="text-align: left;"><code>ls foto.png 2&gt; /dev/null</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-orientarse-en-el-sistema-módulo-02">2. Orientarse en el
+sistema (Módulo 02)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pwd</code></td>
+<td style="text-align: left;">Muestra la ruta del directorio actual</td>
+<td style="text-align: left;"><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd</code></td>
+<td style="text-align: left;">Cambia de directorio</td>
+<td style="text-align: left;"><code>cd Documentos</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ls</code></td>
+<td style="text-align: left;">Lista el contenido del directorio
+actual</td>
+<td style="text-align: left;"><code>ls</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ls -l</code></td>
+<td style="text-align: left;">Listado <strong>largo</strong> (permisos,
+propietario, tamaño, fecha)</td>
+<td style="text-align: left;"><code>ls -l</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ls -lh</code></td>
+<td style="text-align: left;">Listado largo con tamaños legibles (KB,
+MB, GB)</td>
+<td style="text-align: left;"><code>ls -lh</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ls -a</code></td>
+<td style="text-align: left;">Incluye archivos ocultos</td>
+<td style="text-align: left;"><code>ls -a</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-moverse-entre-directorios-módulo-03">3. Moverse entre
+directorios (Módulo 03)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cd carpeta</code></td>
+<td style="text-align: left;">Entra en un directorio (ruta
+relativa)</td>
+<td style="text-align: left;"><code>cd Descargas</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd /ruta/completa</code></td>
+<td style="text-align: left;">Va a una ruta absoluta</td>
+<td
+style="text-align: left;"><code>cd /home/usuario/Descargas</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd ~</code></td>
+<td style="text-align: left;">Va al directorio personal del usuario</td>
+<td style="text-align: left;"><code>cd ~</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd</code></td>
+<td style="text-align: left;">(sin argumentos) vuelve al directorio
+personal</td>
+<td style="text-align: left;"><code>cd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd ..</code></td>
+<td style="text-align: left;">Sube un nivel (directorio padre)</td>
+<td style="text-align: left;"><code>cd ..</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd .</code></td>
+<td style="text-align: left;">Hace referencia al directorio actual</td>
+<td style="text-align: left;"><code>cd .</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd -</code></td>
+<td style="text-align: left;">Vuelve al directorio anterior</td>
+<td style="text-align: left;"><code>cd -</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-gestionar-archivos-y-directorios-módulo-04">4. Gestionar
+archivos y directorios (Módulo 04)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>touch</code></td>
+<td style="text-align: left;">Crea un archivo vacío o actualiza su
+fecha</td>
+<td style="text-align: left;"><code>touch nota.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mkdir</code></td>
+<td style="text-align: left;">Crea un directorio</td>
+<td style="text-align: left;"><code>mkdir MisClases</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>mkdir -p</code></td>
+<td style="text-align: left;">Crea directorios anidados de golpe</td>
+<td
+style="text-align: left;"><code>mkdir -p curso/linux/bash</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cp</code></td>
+<td style="text-align: left;">Copia un archivo</td>
+<td style="text-align: left;"><code>cp nota.txt destino/</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cp -r</code></td>
+<td style="text-align: left;">Copia un directorio y todo su
+contenido</td>
+<td style="text-align: left;"><code>cp -r Carpeta destino/</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mv</code></td>
+<td style="text-align: left;">Mueve o renombra archivos y
+directorios</td>
+<td style="text-align: left;"><code>mv nota.txt apuntes.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rm</code></td>
+<td style="text-align: left;">Elimina archivos</td>
+<td style="text-align: left;"><code>rm nota.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>rm -i</code></td>
+<td style="text-align: left;">Elimina con confirmación</td>
+<td style="text-align: left;"><code>rm -i nota.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rm -r</code></td>
+<td style="text-align: left;">Elimina un directorio y su contenido</td>
+<td style="text-align: left;"><code>rm -r Carpeta</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>rm -f</code></td>
+<td style="text-align: left;">Fuerza la eliminación (no pide
+confirmación)</td>
+<td style="text-align: left;"><code>rm -f nota.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rm -rf</code></td>
+<td style="text-align: left;">Elimina directorios forzadamente
+(¡cuidado!)</td>
+<td style="text-align: left;"><code>rm -rf Descargas/*</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>rmdir</code></td>
+<td style="text-align: left;">Elimina solo directorios vacíos</td>
+<td style="text-align: left;"><code>rmdir DirVacio</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-ver-archivos-de-texto-módulo-05">5. Ver archivos de texto
+(Módulo 05)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Muestra todo el contenido de un
+archivo</td>
+<td style="text-align: left;"><code>cat notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cat -n</code></td>
+<td style="text-align: left;">Muestra el contenido numerando las
+líneas</td>
+<td style="text-align: left;"><code>cat -n notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>less</code></td>
+<td style="text-align: left;">Lee archivos largos de forma paginada
+(salir con <code>q</code>)</td>
+<td style="text-align: left;"><code>less manual.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>head</code></td>
+<td style="text-align: left;">Muestra las primeras 10 líneas</td>
+<td style="text-align: left;"><code>head alumnos.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>head -n N</code></td>
+<td style="text-align: left;">Muestra las primeras N líneas</td>
+<td style="text-align: left;"><code>head -n 5 alumnos.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tail</code></td>
+<td style="text-align: left;">Muestra las últimas 10 líneas</td>
+<td style="text-align: left;"><code>tail registro.log</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tail -n N</code></td>
+<td style="text-align: left;">Muestra las últimas N líneas</td>
+<td style="text-align: left;"><code>tail -n 20 registro.log</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-buscar-y-organizar-información-módulo-06">6. Buscar y
+organizar información (Módulo 06)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grep "texto" archivo</code></td>
+<td style="text-align: left;">Muestra las líneas que contienen un
+texto</td>
+<td style="text-align: left;"><code>grep "ERROR" log</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>grep -i</code></td>
+<td style="text-align: left;">Busca sin distinguir
+mayúsculas/minúsculas</td>
+<td style="text-align: left;"><code>grep -i "moodle" r.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep -n</code></td>
+<td style="text-align: left;">Muestra el número de línea de cada
+coincidencia</td>
+<td style="text-align: left;"><code>grep -n "García" alu.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>grep -v</code></td>
+<td style="text-align: left;">Muestra las líneas que NO coinciden</td>
+<td
+style="text-align: left;"><code>grep -v "Completado" t.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep -c</code></td>
+<td style="text-align: left;">Cuenta las líneas con coincidencias</td>
+<td style="text-align: left;"><code>grep -c "ERROR" log</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>grep -w</code></td>
+<td style="text-align: left;">Busca una palabra completa</td>
+<td style="text-align: left;"><code>grep -w "arte" mat.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>wc</code></td>
+<td style="text-align: left;">Cuenta líneas, palabras y bytes</td>
+<td style="text-align: left;"><code>wc archivo.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>wc -l</code></td>
+<td style="text-align: left;">Cuenta líneas</td>
+<td style="text-align: left;"><code>wc -l alumnado.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>wc -w</code></td>
+<td style="text-align: left;">Cuenta palabras</td>
+<td style="text-align: left;"><code>wc -w informe.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>wc -m</code></td>
+<td style="text-align: left;">Cuenta caracteres</td>
+<td style="text-align: left;"><code>wc -m informe.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort</code></td>
+<td style="text-align: left;">Ordena las líneas alfabéticamente</td>
+<td style="text-align: left;"><code>sort nombres.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sort -r</code></td>
+<td style="text-align: left;">Ordena en orden inverso</td>
+<td style="text-align: left;"><code>sort -r nombres.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort -n</code></td>
+<td style="text-align: left;">Ordena numéricamente</td>
+<td style="text-align: left;"><code>sort -n notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sort -nr</code></td>
+<td style="text-align: left;">Ordena números de mayor a menor</td>
+<td style="text-align: left;"><code>sort -nr notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort -f</code></td>
+<td style="text-align: left;">Ordena sin distinguir
+mayúsculas/minúsculas</td>
+<td style="text-align: left;"><code>sort -f nombres.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uniq</code></td>
+<td style="text-align: left;">Elimina líneas repetidas consecutivas</td>
+<td style="text-align: left;"><code>uniq grupos_ord.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uniq -c</code></td>
+<td style="text-align: left;">Cuenta las repeticiones consecutivas</td>
+<td style="text-align: left;"><code>uniq -c grupos_ord.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uniq -d</code></td>
+<td style="text-align: left;">Muestra solo las líneas repetidas</td>
+<td style="text-align: left;"><code>uniq -d grupos_ord.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uniq -u</code></td>
+<td style="text-align: left;">Muestra solo las líneas no repetidas</td>
+<td style="text-align: left;"><code>uniq -u grupos_ord.txt</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-tuberías-y-filtros-módulo-07">7. Tuberías y filtros (Módulo
+07)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando / Operador</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>|</code> (tubería)</td>
+<td style="text-align: left;">Encadena la salida de un comando con la
+entrada del siguiente</td>
+<td style="text-align: left;"><code>grep "ERROR" log | wc -l</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cut -d ";" -f N</code></td>
+<td style="text-align: left;">Extrae el campo N usando <code>;</code>
+como delimitador</td>
+<td
+style="text-align: left;"><code>cut -d ";" -f 1 datos.csv</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cut -d ";" -f 1,3</code></td>
+<td style="text-align: left;">Extrae los campos 1 y 3</td>
+<td
+style="text-align: left;"><code>cut -d ";" -f 1,3 datos.csv</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cut -d ";" -f 1-3</code></td>
+<td style="text-align: left;">Extrae un rango de campos (del 1 al
+3)</td>
+<td
+style="text-align: left;"><code>cut -d ";" -f 1-3 datos.csv</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cut -c 1-5</code></td>
+<td style="text-align: left;">Extrae los caracteres de la posición 1 a
+la 5</td>
+<td style="text-align: left;"><code>cut -c 1-5 archivo.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tee</code></td>
+<td style="text-align: left;">Muestra la salida por pantalla y la guarda
+en un archivo</td>
+<td
+style="text-align: left;"><code>grep "ERROR" log | tee errores.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tee -a</code></td>
+<td style="text-align: left;">Igual que <code>tee</code>, pero añade al
+final del archivo</td>
+<td
+style="text-align: left;"><code>grep "AVISO" log | tee -a errores.txt</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-editor-nano--atajos-de-teclado-módulo-08">8. Editor
+<code>nano</code> — atajos de teclado (Módulo 08)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Atajo</th>
+<th style="text-align: left;">Para qué sirve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>nano archivo</code></td>
+<td style="text-align: left;">Abre (o crea) un archivo en nano</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + O</code></td>
+<td style="text-align: left;">Guardar el archivo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + X</code></td>
+<td style="text-align: left;">Salir de nano</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + W</code></td>
+<td style="text-align: left;">Buscar texto</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + \</code></td>
+<td style="text-align: left;">Buscar y reemplazar</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + K</code></td>
+<td style="text-align: left;">Cortar la línea o la selección</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Alt + 6</code></td>
+<td style="text-align: left;">Copiar la línea o la selección</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + U</code></td>
+<td style="text-align: left;">Pegar lo cortado o copiado</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Alt + A</code></td>
+<td style="text-align: left;">Iniciar selección (marcar texto)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Alt + U</code></td>
+<td style="text-align: left;">Deshacer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Alt + E</code></td>
+<td style="text-align: left;">Rehacer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + G</code></td>
+<td style="text-align: left;">Ayuda</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <code>Ctrl + Z</code> <strong>NO</strong> deshace: suspende el
+programa. Para deshacer usa <code>Alt + U</code>.</p>
+</blockquote>
+<hr />
+<h2 id="9-permisos-y-usuarios-módulo-09">9. Permisos y usuarios (Módulo
+09)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>chmod 755 archivo</code></td>
+<td style="text-align: left;">Cambia permisos en modo numérico
+(octal)</td>
+<td style="text-align: left;"><code>chmod 755 script.sh</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chmod u+x archivo</code></td>
+<td style="text-align: left;">Añade ejecución al propietario (modo
+simbólico)</td>
+<td style="text-align: left;"><code>chmod u+x script.sh</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>chmod o-w archivo</code></td>
+<td style="text-align: left;">Quita escritura a otros</td>
+<td style="text-align: left;"><code>chmod o-w notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chmod g=rx archivo</code></td>
+<td style="text-align: left;">Asigna al grupo solo lectura y
+ejecución</td>
+<td style="text-align: left;"><code>chmod g=rx script.sh</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>chmod -R 755 dir</code></td>
+<td style="text-align: left;">Cambia permisos recursivamente
+(¡<code>-R</code> mayúscula!)</td>
+<td style="text-align: left;"><code>chmod -R 755 dir/</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chown usuario archivo</code></td>
+<td style="text-align: left;">Cambia el propietario</td>
+<td style="text-align: left;"><code>chown ana notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td
+style="text-align: left;"><code>chown usuario:grupo archivo</code></td>
+<td style="text-align: left;">Cambia propietario y grupo</td>
+<td
+style="text-align: left;"><code>chown ana:profesorado notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chgrp grupo archivo</code></td>
+<td style="text-align: left;">Cambia solo el grupo</td>
+<td
+style="text-align: left;"><code>chgrp profesorado notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>groups</code></td>
+<td style="text-align: left;">Muestra los grupos del usuario actual</td>
+<td style="text-align: left;"><code>groups</code></td>
+</tr>
+</tbody>
+</table>
+<p>Valores numéricos de permisos: <code>r=4</code> <code>w=2</code>
+<code>x=1</code>. Se suman por bloque (usuario / grupo / otros).
+Ejemplo: <code>754</code> = usuario <code>rwx</code> (7), grupo
+<code>r-x</code> (5), otros <code>r--</code> (4).</p>
+<hr />
+<h2 id="10-comandos-del-sistema-módulo-10">10. Comandos del sistema
+(Módulo 10)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>uname -a</code></td>
+<td style="text-align: left;">Muestra toda la información del
+sistema</td>
+<td style="text-align: left;"><code>uname -a</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uname -m</code></td>
+<td style="text-align: left;">Arquitectura del procesador</td>
+<td style="text-align: left;"><code>uname -m</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uname -r</code></td>
+<td style="text-align: left;">Versión del kernel</td>
+<td style="text-align: left;"><code>uname -r</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>df -h</code></td>
+<td style="text-align: left;">Espacio en disco en formato legible</td>
+<td style="text-align: left;"><code>df -h</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>du -h dir</code></td>
+<td style="text-align: left;">Tamaño de archivos y subdirectorios</td>
+<td style="text-align: left;"><code>du -h Documentos</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>du -sh dir</code></td>
+<td style="text-align: left;">Tamaño total (resumen) de un
+directorio</td>
+<td style="text-align: left;"><code>du -sh ~</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>free -h</code></td>
+<td style="text-align: left;">Uso de memoria RAM y swap</td>
+<td style="text-align: left;"><code>free -h</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ps</code></td>
+<td style="text-align: left;">Procesos del usuario actual</td>
+<td style="text-align: left;"><code>ps</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ps -e</code></td>
+<td style="text-align: left;">Todos los procesos del sistema</td>
+<td style="text-align: left;"><code>ps -e</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ps -ef</code></td>
+<td style="text-align: left;">Todos los procesos con detalle</td>
+<td style="text-align: left;"><code>ps -ef</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>top</code></td>
+<td style="text-align: left;">Monitor de procesos en tiempo real (salir:
+<code>q</code>)</td>
+<td style="text-align: left;"><code>top</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>kill PID</code></td>
+<td style="text-align: left;">Termina un proceso de forma ordenada</td>
+<td style="text-align: left;"><code>kill 1234</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>kill -9 PID</code></td>
+<td style="text-align: left;">Fuerza la terminación de un proceso</td>
+<td style="text-align: left;"><code>kill -9 1234</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>hostname</code></td>
+<td style="text-align: left;">Nombre del equipo</td>
+<td style="text-align: left;"><code>hostname</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>date</code></td>
+<td style="text-align: left;">Fecha y hora del sistema</td>
+<td style="text-align: left;"><code>date</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uptime</code></td>
+<td style="text-align: left;">Tiempo de actividad del sistema</td>
+<td style="text-align: left;"><code>uptime</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>who</code></td>
+<td style="text-align: left;">Usuarios conectados</td>
+<td style="text-align: left;"><code>who</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-búsqueda-de-archivos-módulo-11">11. Búsqueda de archivos
+(Módulo 11)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>find . -name "archivo"</code></td>
+<td style="text-align: left;">Busca por nombre (distingue
+mayúsculas)</td>
+<td style="text-align: left;"><code>find . -name "notas.txt"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>find . -iname "archivo"</code></td>
+<td style="text-align: left;">Busca por nombre sin distinguir
+mayúsculas</td>
+<td
+style="text-align: left;"><code>find . -iname "Notas.txt"</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>find . -name "*.txt"</code></td>
+<td style="text-align: left;">Busca por extensión (con comodines)</td>
+<td style="text-align: left;"><code>find . -name "*.pdf"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>find . -type d</code></td>
+<td style="text-align: left;">Busca solo directorios</td>
+<td
+style="text-align: left;"><code>find . -type d -name "Clase"</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>find . -type f</code></td>
+<td style="text-align: left;">Busca solo archivos regulares</td>
+<td
+style="text-align: left;"><code>find . -type f -name "*.md"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>find . -size +100M</code></td>
+<td style="text-align: left;">Busca por tamaño</td>
+<td style="text-align: left;"><code>find . -size +1G</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>find . -mtime -7</code></td>
+<td style="text-align: left;">Busca por fecha de modificación
+(días)</td>
+<td style="text-align: left;"><code>find . -mtime -1</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>find . -perm 755</code></td>
+<td style="text-align: left;">Busca por permisos</td>
+<td style="text-align: left;"><code>find . -perm 755</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>find . -exec cmd {} \;</code></td>
+<td style="text-align: left;">Ejecuta un comando sobre cada
+resultado</td>
+<td
+style="text-align: left;"><code>find . -name "*.sh" -exec chmod +x {} \;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>locate texto</code></td>
+<td style="text-align: left;">Busca en una base de datos pregenerada
+(rápido)</td>
+<td style="text-align: left;"><code>locate passwd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>which comando</code></td>
+<td style="text-align: left;">Muestra la ruta de un comando</td>
+<td style="text-align: left;"><code>which python3</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>whereis comando</code></td>
+<td style="text-align: left;">Muestra ejecutable, manual y fuentes</td>
+<td style="text-align: left;"><code>whereis ls</code></td>
+</tr>
+</tbody>
+</table>
+<p>Comodines para <code>find</code>: <code>*</code> (varios caracteres),
+<code>?</code> (un carácter).</p>
+<hr />
+<h2 id="12-introducción-a-scripts-con-bash-módulo-12">12. Introducción a
+scripts con Bash (Módulo 12)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Elemento</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>#!/bin/bash</code></td>
+<td style="text-align: left;">Indica el intérprete (shebang, primera
+línea)</td>
+<td style="text-align: left;"><code>#!/bin/bash</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code># comentario</code></td>
+<td style="text-align: left;">Comentario (no se ejecuta)</td>
+<td style="text-align: left;"><code># Esto es un comentario</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>echo "texto"</code></td>
+<td style="text-align: left;">Muestra un mensaje por pantalla</td>
+<td style="text-align: left;"><code>echo "Hola"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>read variable</code></td>
+<td style="text-align: left;">Lee datos del teclado</td>
+<td style="text-align: left;"><code>read nombre</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>variable="valor"</code></td>
+<td style="text-align: left;">Define una variable (sin espacios en el
+<code>=</code>)</td>
+<td style="text-align: left;"><code>nombre="Ana"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>$variable</code></td>
+<td style="text-align: left;">Accede al valor de una variable</td>
+<td style="text-align: left;"><code>echo $nombre</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>$(comando)</code></td>
+<td style="text-align: left;">Ejecuta un comando y usa su resultado</td>
+<td style="text-align: left;"><code>echo $(date)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>$0</code></td>
+<td style="text-align: left;">Nombre del script</td>
+<td style="text-align: left;"><code>echo $0</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>$1, $2...</code></td>
+<td style="text-align: left;">Argumentos pasados al script</td>
+<td style="text-align: left;"><code>echo $1</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>$#</code></td>
+<td style="text-align: left;">Número total de argumentos</td>
+<td style="text-align: left;"><code>echo $#</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>$?</code></td>
+<td style="text-align: left;">Código de salida del último comando</td>
+<td
+style="text-align: left;"><code>if [ $? -eq 0 ]; then ...</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>if [ cond ]; then ... fi</code></td>
+<td style="text-align: left;">Condicional</td>
+<td
+style="text-align: left;"><code>if [ $n -gt 5 ]; then ... fi</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>elif [ cond ]; then</code></td>
+<td style="text-align: left;">Condición alternativa</td>
+<td style="text-align: left;"><code>elif [ $n -eq 3 ]; then</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>else</code></td>
+<td style="text-align: left;">Código si no se cumple la condición</td>
+<td style="text-align: left;"><code>else</code></td>
+</tr>
+<tr class="odd">
+<td
+style="text-align: left;"><code>for var in lista; do ... done</code></td>
+<td style="text-align: left;">Bucle para cada elemento de una lista</td>
+<td
+style="text-align: left;"><code>for f in *.txt; do ... done</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chmod +x script.sh</code></td>
+<td style="text-align: left;">Da permisos de ejecución al script</td>
+<td style="text-align: left;"><code>chmod +x mi_script.sh</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>./script.sh</code></td>
+<td style="text-align: left;">Ejecuta el script del directorio
+actual</td>
+<td style="text-align: left;"><code>./mi_script.sh</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>bash script.sh</code></td>
+<td style="text-align: left;">Ejecuta el script sin permisos de
+ejecución</td>
+<td style="text-align: left;"><code>bash mi_script.sh</code></td>
+</tr>
+</tbody>
+</table>
+<p>Operadores de <code>if</code> (números): <code>-eq</code> igual ·
+<code>-ne</code> distinto · <code>-gt</code> mayor · <code>-lt</code>
+menor · <code>-ge</code> mayor o igual · <code>-le</code> menor o igual.
+Operadores de <code>if</code> (texto): <code>=</code> igual ·
+<code>!=</code> distinto · <code>-z</code> cadena vacía ·
+<code>-n</code> cadena no vacía. Comprobación de archivos:
+<code>[ -f archivo ]</code> existe y es archivo ·
+<code>[ -d dir ]</code> existe y es directorio.</p>
+<hr />
+<h2 id="-comodines-y-símbolos-especiales">🧭 Comodines y símbolos
+especiales</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Símbolo</th>
+<th style="text-align: left;">Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>/</code></td>
+<td style="text-align: left;">Directorio raíz (inicio de una ruta
+absoluta)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>~</code></td>
+<td style="text-align: left;">Directorio personal del usuario</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>.</code></td>
+<td style="text-align: left;">Directorio actual</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>..</code></td>
+<td style="text-align: left;">Directorio padre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>*</code></td>
+<td style="text-align: left;">Comodín: cualquier secuencia de
+caracteres</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>?</code></td>
+<td style="text-align: left;">Comodín: un único carácter</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">`</td>
+<td style="text-align: left;">`</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>&gt;</code> <code>&gt;&gt;</code>
+<code>2&gt;</code> <code>&amp;&gt;</code> <code>&lt;</code></td>
+<td style="text-align: left;">Redirecciones de STDOUT / STDERR /
+STDIN</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="-mapa-rápido-de-qué-necesito-cuando">✅ Mapa rápido de "qué
+necesito cuando..."</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Quiero...</th>
+<th style="text-align: left;">Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Saber dónde estoy</td>
+<td style="text-align: left;"><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ver qué hay aquí</td>
+<td style="text-align: left;"><code>ls</code> (o
+<code>ls -lh</code>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cambiar de carpeta</td>
+<td style="text-align: left;"><code>cd ruta</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Crear un archivo vacío</td>
+<td style="text-align: left;"><code>touch archivo.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Crear una carpeta (o varias anidadas)</td>
+<td style="text-align: left;"><code>mkdir -p a/b/c</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Copiar / mover / borrar</td>
+<td style="text-align: left;"><code>cp</code> · <code>mv</code> ·
+<code>rm</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leer un archivo</td>
+<td style="text-align: left;"><code>cat</code> (corto) ·
+<code>less</code> (largo)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ver el principio / final</td>
+<td style="text-align: left;"><code>head</code> · <code>tail</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Buscar texto dentro de archivos</td>
+<td style="text-align: left;"><code>grep</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Contar líneas / palabras / caracteres</td>
+<td style="text-align: left;"><code>wc -l</code> · <code>wc -w</code> ·
+<code>wc -m</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ordenar y quitar duplicados</td>
+<td style="text-align: left;"><code>sort</code> · <code>uniq</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Encadenar comandos</td>
+<td style="text-align: left;"><code>comando1 | comando2</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Extraer columnas de un CSV</td>
+<td style="text-align: left;"><code>cut -d ";" -f N</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guardar la salida y verla a la vez</td>
+<td style="text-align: left;"><code>tee</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Editar un archivo en consola</td>
+<td style="text-align: left;"><code>nano</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cambiar permisos / dueño</td>
+<td style="text-align: left;"><code>chmod</code> ·
+<code>chown</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ver espacio / memoria / procesos</td>
+<td style="text-align: left;"><code>df -h</code> · <code>free -h</code>
+· <code>ps -ef</code> · <code>top</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Matar un proceso</td>
+<td style="text-align: left;"><code>kill PID</code> (o
+<code>kill -9 PID</code>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Buscar un archivo por nombre</td>
+<td style="text-align: left;"><code>find . -name "*.txt"</code> ·
+<code>locate</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Saber dónde está un comando</td>
+<td style="text-align: left;"><code>which</code> ·
+<code>whereis</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Automatizar tareas</td>
+<td style="text-align: left;">escribir un script <code>.sh</code> con
+<code>nano</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Hoja de referencia generada a partir de la guía «La consola de
+comandos» (módulos 01–12).</em></p>

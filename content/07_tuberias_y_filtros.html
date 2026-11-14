@@ -1,0 +1,228 @@
+<h1 id="la-consola-de-comandos-parte-vii">La consola de comandos. Parte
+VII</h1>
+<h2 id="-tuberías-y-filtros">🔗 Tuberías y filtros</h2>
+<p>En el módulo anterior hemos aprendido a buscar información con
+<code>grep</code>, contar con <code>wc</code>, ordenar con
+<code>sort</code> y eliminar duplicados con <code>uniq</code>. Sin
+embargo, hasta ahora hemos utilizado estos comandos de forma
+independiente y separada.</p>
+<p>¿Qué ocurre si queremos <strong>encadenar varias
+operaciones</strong>? Por ejemplo: buscar una palabra, ordenar el
+resultado y contar cuántas líneas aparecen. Hacerlo paso a paso sería un
+proceso largo y engorroso.</p>
+<p>La <strong>tubería</strong> (<em>pipe</em>) es el mecanismo que
+permite conectar la salida de un comando con la entrada de otro,
+formando una cadena de procesamiento.</p>
+<h2 id="-la-tubería-el-operador-">🚰 La tubería: el operador
+<code>|</code></h2>
+<p>El carácter <code>|</code> (<em>pipe</em> o tubería) envía la
+<strong>salida estándar (STDOUT)</strong> de un comando a la
+<strong>entrada estándar (STDIN)</strong> del siguiente.</p>
+<p>Su estructura básica es:</p>
+<pre class="bash"><code>comando1 | comando2 | comando3</code></pre>
+<p>Cada comando recibe como entrada lo que el anterior ha producido como
+salida.</p>
+<h3 id="-ejemplo-buscar-y-contar">💡 Ejemplo: Buscar y contar</h3>
+<p>Imaginemos que queremos saber cuántas líneas contienen la palabra
+"ERROR" en un archivo de registro:</p>
+<pre class="bash"><code>grep &quot;ERROR&quot; registros.log | wc -l</code></pre>
+<p><img src="/assets/pipe_ejemplo_1.png"
+alt="Ejemplo de tubería con grep &amp; wc" /></p>
+<p>Sin tuberías, necesitaríamos dos pasos para conseguir el mismo
+resultado:</p>
+<pre class="bash"><code># Paso 1: guardar el resultado intermedio
+grep &quot;ERROR&quot; registros.log &gt; resultado_temporal.txt
+
+# Paso 2: contar las líneas del archivo temporal
+wc -l resultado_temporal.txt</code></pre>
+<p>Con la tubería, todo se resuelve en una sola línea.</p>
+<h3 id="-ejemplo-buscar-ordenar-y-eliminar-duplicados">💡 Ejemplo:
+Buscar, ordenar y eliminar duplicados</h3>
+<p>Supongamos que tenemos un listado de materias y queremos obtener una
+lista ordenada sin repeticiones:</p>
+<pre class="bash"><code>sort materias.txt | uniq</code></pre>
+<p><img src="/assets/tuberia_sort_uniq.png"
+alt="Ejemplo de tubería con sort &amp; uniq" /></p>
+<h3 id="-ejemplo-buscar-y-mostrar-las-primeras-líneas">💡 Ejemplo:
+Buscar y mostrar las primeras líneas</h3>
+<pre class="bash"><code>grep &quot;1A&quot; alumnado.csv | head -n 3</code></pre>
+<p>Este comando busca todas las líneas que contienen "1A" y muestra
+únicamente las tres primeras.</p>
+<p><img src="/assets/tuberia_grep_head.png"
+alt="Ejemplo de tubería con grep &amp; head" /></p>
+<h3 id="-ejemplo-encadenar-varias-tuberías">💡 Ejemplo: Encadenar varias
+tuberías</h3>
+<p>Podemos encadenar tantos comandos como necesitemos:</p>
+<pre class="bash"><code>grep &quot;Completado&quot; participacion.txt | sort | uniq -c</code></pre>
+<p>Veamos qué conseguimos con el comando anterior:</p>
+<ol type="1">
+<li><code>grep</code>: Busca las líneas que contienen "Completado".</li>
+<li><code>sort</code>: Ordena el resultado alfabéticamente.</li>
+<li><code>uniq -c</code>: Cuenta las repeticiones consecutivas.</li>
+</ol>
+<p><img src="/assets/pipe_encadenar_tuberias.png"
+alt="Ejemplo encadenar varias tuberías" /></p>
+<h2 id="️-extraer-columnas-el-comando-cut">✂️ Extraer columnas. El
+comando <code>cut</code></h2>
+<p>El comando <code>cut</code> permite <strong>extraer una parte
+específica de cada línea</strong>, ya sea por posición de carácter o por
+un delimitador que podamos establecer.</p>
+<h3 id="cortar-por-delimitador-con-cut--d">Cortar por delimitador con
+<code>cut -d</code></h3>
+<p>Imaginemos un archivo <code>notas.csv</code> con el siguiente
+contenido:</p>
+<pre class="text"><code>Ana;7;Aprobado
+Bernat;4;Suspendido
+Carla;9;Sobresaliente
+David;5;Aprobado</code></pre>
+<p>Para extraer únicamente los nombres (primera columna), indicamos que
+el delimitador es el punto y coma:</p>
+<pre class="bash"><code>cut -d &quot;;&quot; -f 1 notas.csv</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>Ana
+Bernat
+Carla
+David</code></pre>
+<p>Donde:</p>
+<ul>
+<li><code>-d ";"</code> establece el delimitador.</li>
+<li><code>-f 1</code> selecciona el primer campo, <code>-f 2</code> el
+segundo...</li>
+</ul>
+<p>Si por el contrario, quisiéramos extraer las notas usaríamos el
+comando siguiente:</p>
+<pre class="bash"><code>cut -d &quot;;&quot; -f 3 notas.csv</code></pre>
+<p><img src="/assets/cut_ejemplo.png" alt="Ejemplo cut" /></p>
+<h3 id="seleccionar-varios-campos">Seleccionar varios campos</h3>
+<p>Podemos seleccionar varios campos separándolos por comas:</p>
+<pre class="bash"><code>cut -d &quot;;&quot; -f 1,3 notas.csv</code></pre>
+<p><img src="/assets/cut_seleccionar_campos.png"
+alt="Seleccionar campos diversos con cut" /></p>
+<h3 id="seleccionar-un-rango-de-campos">Seleccionar un rango de
+campos</h3>
+<p>En esta ocasión, usando un guion podremos indicar un rango de campos
+determinado.</p>
+<pre class="bash"><code>cut -d &quot;;&quot; -f 1-2 notas.csv</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>Ana;7
+Bernat;4
+Carla;9
+David;5</code></pre>
+<h2 id="-enviar-salida-a-pantalla-y-archivo-el-comando-tee">📤 Enviar
+salida a pantalla y archivo. El comando <code>tee</code></h2>
+<p>El comando <code>tee</code> permite <strong>redirigir la salida de un
+comando a un archivo</strong> y, al mismo tiempo, <strong>mostrarla por
+pantalla</strong>.</p>
+<p>Su nombre proviene de la forma en que una tubería de fontanería
+(<em>T-pipe</em>) divide el flujo en dos direcciones.</p>
+<p><img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/T-Stuecke_4052.jpg/960px-T-Stuecke_4052.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail"
+alt="T-pipe" /></p>
+<p><em><a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/T-Stuecke_4052.jpg/960px-T-Stuecke_4052.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail">T-Stuecke
+4052.jpg</a> - Torsten Bätge, 2007. Wikimedia Commons. Licencia: CC
+BY-SA 3.0</em></p>
+<pre class="bash"><code>comando | tee archivo.txt</code></pre>
+<h3 id="-ejemplo-guardar-y-visualizar">💡 Ejemplo: Guardar y
+visualizar</h3>
+<pre class="bash"><code>grep &quot;ERROR&quot; registro.log | tee errores.txt</code></pre>
+<p>Este comando muestra por pantalla las líneas que contienen "ERROR" y,
+además, las guarda en el archivo <code>errores.txt</code>.</p>
+<h3 id="añadir-al-final-del-archivo-con-tee--a">Añadir al final del
+archivo con <code>tee -a</code></h3>
+<p>Por defecto, <code>tee</code> sobrescribe el archivo existente. Para
+añadir al final sin borrar su contenido:</p>
+<pre class="bash"><code>grep &quot;AVISO&quot; registro.log | tee -a errores.txt</code></pre>
+<h3 id="-ejemplo-filtrar-y-guardar-un-resumen">💡 Ejemplo: Filtrar y
+guardar un resumen</h3>
+<pre class="bash"><code>sort materias.txt | uniq | sort | tee resumen_materias.txt</code></pre>
+<p>Este comando:</p>
+<ol type="1">
+<li>Ordena las materias.</li>
+<li>Elimina duplicados.</li>
+<li>Ordena alfabéticamente.</li>
+<li>Muestra el resultado por pantalla y lo guarda en
+<code>resumen_materias.txt</code>.</li>
+</ol>
+<p><img src="/assets/tee_filtrar_guardar_resumen.png"
+alt="Tee, filtrar y mostrar en pantalla" /></p>
+<p><img src="/assets/tee_filtrar_guardar_resumen2.png"
+alt="Tee, filtrar y guardar resumen" /></p>
+<h2 id="-combinar-cut-con-tuberías">🔗 Combinar <code>cut</code> con
+tuberías</h2>
+<p>La verdadera potencia de <code>cut</code> aparece al combinarlo con
+otros comandos mediante tuberías.</p>
+<h3 id="-ejemplo-obtener-una-lista-de-nombres-únicos">💡 Ejemplo:
+Obtener una lista de nombres únicos</h3>
+<p>Imaginemos un archivo <code>asistencia.csv</code> con registros de
+entrada a un evento:</p>
+<pre class="text"><code>Ana;09:00;Entrada
+Bernat;09:02;Entrada
+Ana;09:15;Salida
+Carla;09:20;Entrada
+Bernat;09:30;Salida</code></pre>
+<p>Para obtener una lista de personas únicas que han entrado al
+evento:</p>
+<pre class="bash"><code>cut -d &quot;;&quot; -f 1 asistencia.csv | sort | uniq</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>Ana
+Bernat
+Carla</code></pre>
+<h3 id="-ejemplo-contar-cuántas-veces-ha-fichado-cada-persona">💡
+Ejemplo: Contar cuántas veces ha fichado cada persona</h3>
+<pre class="bash"><code>cut -d &quot;;&quot; -f 1 asistencia.csv | sort | uniq -c | sort -rn</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>      2 Ana
+      2 Bernat
+      1 Carla</code></pre>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>|</code></td>
+<td style="text-align: left;">Encadena la salida de un comando con la
+entrada del siguiente</td>
+<td style="text-align: left;"><code>grep "ERROR" log | wc -l</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cut -d ";" -f N</code></td>
+<td style="text-align: left;">Extrae el campo N usando ";" como
+delimitador</td>
+<td
+style="text-align: left;"><code>cut -d ";" -f 1 datos.csv</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cut -d ";" -f 1,3</code></td>
+<td style="text-align: left;">Extrae los campos 1 y 3</td>
+<td
+style="text-align: left;"><code>cut -d ";" -f 1,3 datos.csv</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cut -c 1-5</code></td>
+<td style="text-align: left;">Extrae los caracteres de la posición 1 a
+la 5</td>
+<td style="text-align: left;"><code>cut -c 1-5 archivo.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tee</code></td>
+<td style="text-align: left;">Muestra la salida por pantalla y la guarda
+en un archivo</td>
+<td
+style="text-align: left;"><code>grep "ERROR" log | tee errores.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tee -a</code></td>
+<td style="text-align: left;">Igual que <code>tee</code> pero añade al
+final del archivo</td>
+<td
+style="text-align: left;"><code>grep "AVISO" log | tee -a errores.txt</code></td>
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,640 @@
+<h1 id="la-consola-de-comandos-parte-xii">La consola de comandos. Parte
+XII</h1>
+<h2 id="-introducción-a-scripts-con-bash">📜 Introducción a scripts con
+Bash</h2>
+<p>A lo largo de estos módulos de aprendizaje y formación, hemos
+aprendido a ejecutar comandos uno a uno. Sin embargo, en muchas
+ocasiones necesitaremos <strong>ejecutar la misma secuencia de comandos
+repetidamente</strong> para automatizar tareas en el sistema. Para ello
+existen los <strong>scripts</strong>, que son archivos de texto que
+contienen una serie de comandos que Bash ejecuta de forma
+secuencial.</p>
+<p>Un script es, explicado de manera muy básica, una
+<strong>automatización</strong>. En lugar de escribir los mismos
+comandos cada vez, los guardamos en un archivo y lo ejecutamos cuando
+los necesitamos.</p>
+<h2 id="-crear-un-script">📄 Crear un script</h2>
+<p>Un script es un <strong>archivo de texto plano que contiene
+comandos</strong> y tiene como extensión <code>.sh</code>. Para crear
+uno, utilizamos cualquier editor de texto, como <code>nano</code>.</p>
+<h3 id="estructura-básica">Estructura básica</h3>
+<pre class="bash"><code>#!/bin/bash
+# Este es un comentario
+echo &quot;Este es mi primer script.&quot;</code></pre>
+<p>Donde:</p>
+<ul>
+<li><code>#!/bin/bash</code>: es la <strong>línea shebang</strong>.
+Indica al sistema que debe usar <code>bash</code> para interpretar el
+archivo.</li>
+<li><code>#</code>: las líneas que comienzan con <code>#</code> son
+<strong>comentarios</strong> y no se ejecutan (el sistema las omite y
+sirven para documentar nuestro script).</li>
+<li><code>echo "Este es mi primer script."</code>: es el comando que se
+ejecutará.</li>
+</ul>
+<h3 id="-ejemplo-crear-un-primer-script">💡 Ejemplo: Crear un primer
+script</h3>
+<pre class="bash"><code>nano saludar.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Bienvenido/a a la guía de Bash&quot;
+echo &quot;Fecha actual: $(date)&quot;
+echo &quot;Usuario: $(whoami)&quot;</code></pre>
+<p>Donde:</p>
+<ul>
+<li><code>echo</code>: muestra o imprime en pantalla texto.</li>
+<li><code>$(date)</code>: ejecuta el comando <code>date</code> (fecha y
+hora) y muestra su resultado en pantalla.</li>
+<li><code>$(whoami)</code>: ejecuta el comando <code>whoami</code>
+(nombre del usuario/a) y muestra su resultado en pantalla.</li>
+</ul>
+<hr />
+<h2 id="️-ejecutar-un-script">▶️ Ejecutar un script</h2>
+<p>Para ejecutar un script, primero debemos darle <strong>permisos de
+ejecución</strong>:</p>
+<pre class="bash"><code>chmod +x saludar.sh</code></pre>
+<p>Después, lo ejecutamos indicando la ruta:</p>
+<pre class="bash"><code>./saludar.sh</code></pre>
+<p>El prefijo <code>./</code> indica que el script se encuentra en el
+directorio actual.</p>
+<p>Resultado:</p>
+<pre class="text"><code>Bienvenido/a a la guía de Bash
+Fecha actual: mar 09 10:30:15 CET 2026
+Usuario: profesor</code></pre>
+<h3 id="ejecutar-sin-permisos-de-ejecución">Ejecutar sin permisos de
+ejecución</h3>
+<p>También podemos ejecutar un script sin darle permisos previos
+llamando directamente a <code>bash</code>:</p>
+<pre class="bash"><code>bash saludar.sh</code></pre>
+<hr />
+<h2 id="-variables">📝 Variables</h2>
+<p>Las variables permiten almacenar valores para usarlos posteriormente
+en el script.</p>
+<h3 id="definir-una-variable">Definir una variable</h3>
+<pre class="bash"><code>nombre=&quot;Ana&quot;</code></pre>
+<p>⚠️ No debe haber espacios entre el nombre de la variable, el signo
+<code>=</code> y el valor.</p>
+<h3 id="usar-una-variable">Usar una variable</h3>
+<p>Para acceder al valor de una variable, se precede con el símbolo
+<code>$</code>:</p>
+<pre class="bash"><code>nombre=&quot;Ana&quot;
+echo &quot;Hola, $nombre&quot;</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>Hola, Ana</code></pre>
+<h3 id="-ejemplo-variables-con-información-del-sistema">💡 Ejemplo:
+variables con información del sistema</h3>
+<pre class="bash"><code>#!/bin/bash
+usuario=$(whoami)
+fecha=$(date +%Y-%m-%d)
+directorio=$(pwd)
+
+echo &quot;Usuario: $usuario&quot;
+echo &quot;Fecha: $fecha&quot;
+echo &quot;Directorio: $directorio&quot;</code></pre>
+<h3 id="variables-especiales">Variables especiales</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>$0</code></td>
+<td style="text-align: left;">Nombre del script</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>$1, $2, $3...</code></td>
+<td style="text-align: left;">Argumentos pasados al script</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>$#</code></td>
+<td style="text-align: left;">Número de argumentos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>$?</code></td>
+<td style="text-align: left;">Código de salida del último comando</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-ejemplo-usar-argumentos">💡 Ejemplo: usar argumentos</h3>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;El script se llama: $0&quot;
+echo &quot;Primer argumento: $1&quot;
+echo &quot;Segundo argumento: $2&quot;
+echo &quot;Número total de argumentos: $#&quot;</code></pre>
+<p>Si ejecutamos:</p>
+<pre class="bash"><code>./mi_script.sh hola mundo</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>El script se llama: ./mi_script.sh
+Primer argumento: hola
+Segundo argumento: mundo
+Número total de argumentos: 2</code></pre>
+<hr />
+<h2 id="-lectura-de-datos-con-read">📋 Lectura de datos con
+<code>read</code></h2>
+<p>El comando <code>read</code> permite solicitar datos al usuario
+durante la ejecución del script.</p>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;¿Cómo te llamas?&quot;
+read nombre
+echo &quot;Hola, $nombre&quot;</code></pre>
+<h3 id="-ejemplo-pedir-datos-y-mostrar-un-resumen">💡 Ejemplo: pedir
+datos y mostrar un resumen</h3>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Introduce tu nombre:&quot;
+read nombre
+echo &quot;Introduce tu etapa educativa (Primaria/Secundaria/FP):&quot;
+read etapa
+echo &quot;&quot;
+echo &quot;=== RESUMEN ===&quot;
+echo &quot;Nombre: $nombre&quot;
+echo &quot;Etapa: $etapa&quot;
+echo &quot;Fecha: $(date +%Y-%m-%d)&quot;</code></pre>
+<hr />
+<h2 id="-condicionales-if">🔀 Condicionales: <code>if</code></h2>
+<p>Los condicionales permiten ejecutar diferentes acciones según se
+cumpla o no una condición.</p>
+<h3 id="sintaxis-básica">Sintaxis básica</h3>
+<pre class="bash"><code>if [ condición ]; then
+    # Código si la condición se cumple
+else
+    # Código si la condición no se cumple
+fi</code></pre>
+<h3 id="operadores-de-comparación">Operadores de comparación</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Operador</th>
+<th style="text-align: left;">Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>-eq</code></td>
+<td style="text-align: left;">Igual (números)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-ne</code></td>
+<td style="text-align: left;">Distinto (números)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-gt</code></td>
+<td style="text-align: left;">Mayor que (números)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-lt</code></td>
+<td style="text-align: left;">Menor que (números)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-ge</code></td>
+<td style="text-align: left;">Mayor o igual (números)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-le</code></td>
+<td style="text-align: left;">Menor o igual (números)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>=</code></td>
+<td style="text-align: left;">Igual (texto)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>!=</code></td>
+<td style="text-align: left;">Distinto (texto)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-z</code></td>
+<td style="text-align: left;">Cadena vacía</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-n</code></td>
+<td style="text-align: left;">Cadena no vacía</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-ejemplo-comprobar-si-un-archivo-existe">💡 Ejemplo: comprobar
+si un archivo existe</h3>
+<pre class="bash"><code>#!/bin/bash
+if [ -f &quot;datos.txt&quot; ]; then
+    echo &quot;El archivo existe&quot;
+else
+    echo &quot;El archivo no existe&quot;
+fi</code></pre>
+<h3 id="-ejemplo-comprobar-una-nota">💡 Ejemplo: comprobar una nota</h3>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Introduce la nota del alumno:&quot;
+read nota
+
+if [ $nota -ge 5 ]; then
+    echo &quot;Aprobado&quot;
+else
+    echo &quot;Suspendido&quot;
+fi</code></pre>
+<h3 id="condicionales-con-elif">Condicionales con <code>elif</code></h3>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Introduce la nota:&quot;
+read nota
+
+if [ $nota -ge 9 ]; then
+    echo &quot;Sobresaliente&quot;
+elif [ $nota -ge 7 ]; then
+    echo &quot;Notable&quot;
+elif [ $nota -ge 5 ]; then
+    echo &quot;Aprobado&quot;
+else
+    echo &quot;Suspendido&quot;
+fi</code></pre>
+<hr />
+<h2 id="-bucles-for">🔁 Bucles: <code>for</code></h2>
+<p>Los bucles <code>for</code> permiten repetir una acción para cada
+elemento de una lista.</p>
+<h3 id="sintaxis-básica-1">Sintaxis básica</h3>
+<pre class="bash"><code>for variable in lista; do
+    # Código a repetir
+done</code></pre>
+<h3 id="-ejemplo-listar-archivos-de-un-directorio">💡 Ejemplo: listar
+archivos de un directorio</h3>
+<pre class="bash"><code>#!/bin/bash
+for archivo in Documentos/*.txt; do
+    echo &quot;Archivo: $archivo&quot;
+done</code></pre>
+<h3 id="-ejemplo-contar-del-1-al-5">💡 Ejemplo: contar del 1 al 5</h3>
+<pre class="bash"><code>#!/bin/bash
+for i in 1 2 3 4 5; do
+    echo &quot;Número: $i&quot;
+done</code></pre>
+<h3 id="-ejemplo-procesar-un-listado-de-nombres">💡 Ejemplo: procesar un
+listado de nombres</h3>
+<pre class="bash"><code>#!/bin/bash
+for nombre in Ana Bernat Carla David Elena; do
+    echo &quot;Hola, $nombre&quot;
+done</code></pre>
+<h3 id="-ejemplo-procesar-archivos-de-un-directorio">💡 Ejemplo:
+procesar archivos de un directorio</h3>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Listado de archivos .txt en el directorio actual:&quot;
+for archivo in *.txt; do
+    echo &quot;- $archivo&quot;
+done</code></pre>
+<hr />
+<h2 id="-ejemplo-integrador-script-para-docentes">📦 Ejemplo integrador:
+script para docentes</h2>
+<p>Vamos a crear un script que automatice una tarea habitual: generar un
+informe de notas.</p>
+<pre class="bash"><code>nano informe_notas.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+# Script: informe_notas.sh
+# Descripción: Genera un informe básico de notas de un grupo
+
+echo &quot;=========================================&quot;
+echo &quot;   INFORME DE NOTAS - GENERADO POR BASH&quot;
+echo &quot;   Fecha: $(date +%Y-%m-%d)&quot;
+echo &quot;=========================================&quot;
+echo &quot;&quot;
+
+# Archivo de notas
+archivo=&quot;notas_grupo.csv&quot;
+
+# Comprobar si el archivo existe
+if [ ! -f &quot;$archivo&quot; ]; then
+    echo &quot;ERROR: No se encuentra el archivo $archivo&quot;
+    exit 1
+fi
+
+# Mostrar el contenido
+echo &quot;--- Contenido del archivo ---&quot;
+cat &quot;$archivo&quot;
+echo &quot;&quot;
+
+# Contar el número de alumnos
+total=$(wc -l &lt; &quot;$archivo&quot;)
+echo &quot;Total de alumnos: $total&quot;
+
+# Contar aprobados (buscando notas &gt;= 5)
+aprobados=$(grep -cE &quot;;[5-9]$|;10$&quot; &quot;$archivo&quot;)
+suspendidos=$(grep -cE &quot;;[1-4]$&quot; &quot;$archivo&quot;)
+
+echo &quot;Aprobados: $aprobados&quot;
+echo &quot;Suspensos: $suspendidos&quot;
+echo &quot;&quot;
+echo &quot;=========================================&quot;
+echo &quot;   FIN DEL INFORME&quot;
+echo &quot;=========================================&quot;</code></pre>
+<h3 id="usar-el-script">Usar el script</h3>
+<pre class="bash"><code># Dar permisos de ejecución
+chmod +x informe_notas.sh
+
+# Crear un archivo de ejemplo
+echo &quot;Ana;8&quot; &gt; notas_grupo.csv
+echo &quot;Bernat;4&quot; &gt;&gt; notas_grupo.csv
+echo &quot;Carla;9&quot; &gt;&gt; notas_grupo.csv
+echo &quot;David;5&quot; &gt;&gt; notas_grupo.csv
+echo &quot;Elena;3&quot; &gt;&gt; notas_grupo.csv
+
+# Ejecutar el script
+./informe_notas.sh</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>=========================================
+   INFORME DE NOTAS - GENERADO POR BASH
+   Fecha: 2026-03-09
+=========================================
+
+--- Contenido del archivo ---
+Ana;8
+Bernat;4
+Carla;9
+David;5
+Elena;3
+
+Total de alumnos: 5
+Aprobados: 3
+Suspensos: 2
+
+=========================================
+   FIN DEL INFORME
+=========================================</code></pre>
+<hr />
+<h2 id="-ejemplo-práctico-script-de-bienvenida">💡 Ejemplo práctico:
+script de bienvenida</h2>
+<pre class="bash"><code>nano bienvenida.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+# Script de bienvenida personalizado
+
+hora=$(date +%H)
+usuario=$(whoami)
+
+if [ $hora -lt 12 ]; then
+    turno=&quot;Buenos días&quot;
+elif [ $hora -lt 20 ]; then
+    turno=&quot;Buenas tardes&quot;
+else
+    turno=&quot;Buenas noches&quot;
+fi
+
+echo &quot;$turno, $usuario&quot;
+echo &quot;Hoy es $(date +%A, %d de %B de %Y)&quot;
+echo &quot;&quot;
+# $(df -h ~ | tail -1 | awk &#39;{print $4}&#39;) muestra el espacio libre de tu directorio personal.
+# Aquí se combinan tuberías con awk, una herramienta de procesamiento de columnas
+# que no se explica en detalle en este curso; se incluye como ejemplo de uso real.
+echo &quot;Dispones de $(df -h ~ | tail -1 | awk &#39;{print $4}&#39;) de espacio libre en tu directorio personal&quot;</code></pre>
+<pre class="bash"><code>chmod +x bienvenida.sh
+./bienvenida.sh</code></pre>
+<hr />
+<h2 id="-ejemplo-práctico-script-para-hacer-copias-de-seguridad">💡
+Ejemplo práctico: script para hacer copias de seguridad</h2>
+<pre class="bash"><code>nano backup.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+# Script de copia de seguridad simple
+
+# Definir origen y destino
+origen=~/Documentos
+destino=~/Backups
+fecha=$(date +%Y%m%d)
+archivo=&quot;backup_${fecha}.tar.gz&quot;
+
+# Crear directorio de backups si no existe
+mkdir -p &quot;$destino&quot;
+
+# Crear la copia de seguridad
+echo &quot;Iniciando copia de seguridad...&quot;
+tar -czf &quot;$destino/$archivo&quot; &quot;$origen&quot;
+
+# Verificar si se creó correctamente
+if [ $? -eq 0 ]; then
+    echo &quot;Copia de seguridad creada: $destino/$archivo&quot;
+    echo &quot;Tamaño: $(du -h &quot;$destino/$archivo&quot; | cut -f1)&quot;
+else
+    echo &quot;ERROR: No se pudo crear la copia de seguridad&quot;
+fi</code></pre>
+<pre class="bash"><code>chmod +x backup.sh
+./backup.sh</code></pre>
+<hr />
+<h2 id="️-consejos-para-escribir-scripts">⚠️ Consejos para escribir
+scripts</h2>
+<ol type="1">
+<li><strong>Añade siempre el shebang</strong> (<code>#!/bin/bash</code>)
+en la primera línea.</li>
+<li><strong>Usa comentarios</strong> para explicar qué hace cada parte
+del script.</li>
+<li><strong>Prueba los comandos individualmente</strong> antes de
+incluirlos en el script.</li>
+<li><strong>Da permisos de ejecución</strong> con <code>chmod +x</code>
+antes de ejecutar.</li>
+<li><strong>Valida la entrada</strong> del usuario cuando el script pida
+datos.</li>
+<li><strong>Muestra mensajes claros</strong> para que el usuario sepa
+qué está haciendo el script.</li>
+</ol>
+<hr />
+<h2 id="-práctica-guiada">🧪 Práctica guiada</h2>
+<h3 id="1-crear-un-script-de-saludo">1. Crear un script de saludo</h3>
+<pre class="bash"><code>nano saludo.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Hola, $USER&quot;
+echo &quot;Estás en el directorio: $(pwd)&quot;
+echo &quot;Hoy es: $(date)&quot;</code></pre>
+<pre class="bash"><code>chmod +x saludo.sh
+./saludo.sh</code></pre>
+<h3 id="2-crear-un-script-con-argumentos">2. Crear un script con
+argumentos</h3>
+<pre class="bash"><code>nano argumentos.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Script: $0&quot;
+echo &quot;Argumento 1: $1&quot;
+echo &quot;Argumento 2: $2&quot;
+echo &quot;Total de argumentos: $#&quot;</code></pre>
+<pre class="bash"><code>chmod +x argumentos.sh
+./argumentos.sh hola mundo</code></pre>
+<h3 id="3-crear-un-script-con-condicional">3. Crear un script con
+condicional</h3>
+<pre class="bash"><code>nano comprobar_archivo.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+if [ -f &quot;$1&quot; ]; then
+    echo &quot;El archivo $1 existe&quot;
+    echo &quot;Tamaño: $(du -h &quot;$1&quot; | cut -f1)&quot;
+else
+    echo &quot;El archivo $1 no existe&quot;
+fi</code></pre>
+<pre class="bash"><code>chmod +x comprobar_archivo.sh
+./comprobar_archivo.sh /etc/hostname
+./comprobar_archivo.sh archivo_inexistente.txt</code></pre>
+<h3 id="4-crear-un-script-con-bucle">4. Crear un script con bucle</h3>
+<pre class="bash"><code>nano listar_txt.sh</code></pre>
+<p>Contenido:</p>
+<pre class="bash"><code>#!/bin/bash
+echo &quot;Archivos .txt en el directorio actual:&quot;
+for archivo in *.txt; do
+    if [ -f &quot;$archivo&quot; ]; then
+        echo &quot;  - $archivo ($(wc -l &lt; &quot;$archivo&quot;) líneas)&quot;
+    fi
+done</code></pre>
+<pre class="bash"><code>chmod +x listar_txt.sh
+./listar_txt.sh</code></pre>
+<hr />
+<h2 id="️-actividad-para-entregar">✍️ Actividad para entregar</h2>
+<h3 id="1-script-de-presentación-personal">1. Script de presentación
+personal</h3>
+<p>Crea un script llamado <code>presentacion.sh</code> que:</p>
+<ol type="1">
+<li>Muestre un saludo personalizado con el nombre del usuario.</li>
+<li>Muestre la fecha y hora actual.</li>
+<li>Muestre el directorio de trabajo actual.</li>
+<li>Muestre cuántos archivos <code>.txt</code> hay en el directorio
+actual.</li>
+</ol>
+<h3 id="2-script-de-análisis-de-notas">2. Script de análisis de
+notas</h3>
+<p>Crea un script llamado <code>analisis_notas.sh</code> que:</p>
+<ol type="1">
+<li>Pida al usuario el nombre de un archivo CSV de notas.</li>
+<li>Compruebe si el archivo existe.</li>
+<li>Si existe, muestre:
+<ul>
+<li>El contenido del archivo.</li>
+<li>El número total de registros.</li>
+<li>El número de aprobados (nota &gt;= 5).</li>
+<li>El número de suspensos (nota &lt; 5).</li>
+</ul></li>
+<li>Si no existe, muestre un mensaje de error.</li>
+</ol>
+<p>Para las pruebas, crea un archivo <code>test_notas.csv</code>
+con:</p>
+<pre class="text"><code>Ana;8
+Bernat;4
+Carla;9
+David;5
+Elena;3
+Ferran;7</code></pre>
+<h3 id="3-script-de-copia-de-seguridad">3. Script de copia de
+seguridad</h3>
+<p>Crea un script llamado <code>backup_simple.sh</code> que:</p>
+<ol type="1">
+<li>Cree un directorio <code>~/Backups</code> si no existe.</li>
+<li>Pida al usuario qué directorio quiere respaldar.</li>
+<li>Compruebe si el directorio existe.</li>
+<li>Cree un archivo comprimido con la fecha en el nombre.</li>
+<li>Muestre un mensaje con el nombre del archivo creado y su
+tamaño.</li>
+</ol>
+<h3 id="4-entrega">4. Entrega</h3>
+<p>Entrega un único documento en formato PDF que incluye:</p>
+<ul>
+<li>El código fuente de cada script.</li>
+<li>Capturas de pantalla de la ejecución de cada script.</li>
+<li>Una explicación breve (2-3 líneas) de qué hace cada script.</li>
+<li>Una reflexión sobre qué tareas de tu trabajo como docente podrías
+automatizar con scripts.</li>
+</ul>
+<p>⚠️ En las capturas debe verse tanto la ejecución del script como su
+resultado.</p>
+<hr />
+<h2 id="-criterios-de-realización">✅ Criterios de realización</h2>
+<p>La actividad se considerará correctamente realizada cuando:</p>
+<ul>
+<li>Los scripts tienen la línea shebang (<code>#!/bin/bash</code>).</li>
+<li>Los scripts tienen permisos de ejecución.</li>
+<li>Se utilizan variables correctamente.</li>
+<li>Se utilizan condicionales (<code>if/elif/else</code>).</li>
+<li>Se utilizan bucles (<code>for</code>) donde procede.</li>
+<li>Se utiliza <code>read</code> para entrada de datos.</li>
+<li>Los scripts se ejecutan correctamente y producen los resultados
+esperados.</li>
+<li>La reflexión final propone automatizaciones realistas.</li>
+</ul>
+<hr />
+<h2 id="-resumen-de-comandos-y-estructuras">📋 Resumen de comandos y
+estructuras</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Elemento</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>#!/bin/bash</code></td>
+<td style="text-align: left;">Indica el intérprete del script</td>
+<td style="text-align: left;">Primera línea del archivo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code># comentario</code></td>
+<td style="text-align: left;">Línea de comentario (no se ejecuta)</td>
+<td style="text-align: left;"><code># Esto es un comentario</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>echo "texto"</code></td>
+<td style="text-align: left;">Muestra un mensaje por pantalla</td>
+<td style="text-align: left;"><code>echo "Hola"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>read variable</code></td>
+<td style="text-align: left;">Lee datos del teclado</td>
+<td style="text-align: left;"><code>read nombre</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>$variable</code></td>
+<td style="text-align: left;">Accede al valor de una variable</td>
+<td style="text-align: left;"><code>echo $nombre</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>$(comando)</code></td>
+<td style="text-align: left;">Ejecuta un comando y usa su resultado</td>
+<td style="text-align: left;"><code>echo $(date)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>$1, $2...</code></td>
+<td style="text-align: left;">Argumentos pasados al script</td>
+<td style="text-align: left;"><code>echo $1</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>if [ cond ]; then</code></td>
+<td style="text-align: left;">Condiciona la ejecución</td>
+<td style="text-align: left;"><code>if [ $x -gt 5 ]; then</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>elif [ cond ]; then</code></td>
+<td style="text-align: left;">Condición alternativa</td>
+<td style="text-align: left;"><code>elif [ $x -eq 3 ]; then</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>else</code></td>
+<td style="text-align: left;">Código si no se cumple la condición</td>
+<td style="text-align: left;"><code>else</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>fi</code></td>
+<td style="text-align: left;">Cierra el bloque condicional</td>
+<td style="text-align: left;"><code>fi</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>for var in lista; do</code></td>
+<td style="text-align: left;">Bucle para cada elemento</td>
+<td style="text-align: left;"><code>for f in *.txt; do</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>done</code></td>
+<td style="text-align: left;">Cierra el bucle</td>
+<td style="text-align: left;"><code>done</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chmod +x script.sh</code></td>
+<td style="text-align: left;">Da permisos de ejecución</td>
+<td style="text-align: left;"><code>chmod +x mi_script.sh</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>./script.sh</code></td>
+<td style="text-align: left;">Ejecuta el script</td>
+<td style="text-align: left;"><code>./mi_script.sh</code></td>
+</tr>
+</tbody>
+</table>

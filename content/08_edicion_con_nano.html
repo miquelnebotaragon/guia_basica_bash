@@ -1,0 +1,200 @@
+<h1 id="la-consola-de-comandos-parte-viii">La consola de comandos. Parte
+VIII</h1>
+<h2 id="️-edición-de-archivos-desde-la-consola-el-editor-nano">✏️
+Edición de archivos desde la consola. El editor <code>nano</code></h2>
+<p>En módulos anteriores hemos aprendido cómo crear archivos vacíos con
+el comando <code>touch</code>, visualizar su contenido con
+<code>cat</code>, <code>less</code>, <code>head</code> y
+<code>tail</code>, y buscar información con <code>grep</code>. Sin
+embargo, aún no hemos visto cómo <strong>editar el contenido</strong> de
+un archivo directamente desde la consola.</p>
+<p>En Linux existen varios editores de texto que funcionan en la línea
+de comandos. Los más conocidos son:</p>
+<ul>
+<li><strong><code>nano</code></strong>: editor sencillo e intuitivo,
+ideal para principiantes.</li>
+<li><strong><code>vim</code></strong>: editor muy potente y
+configurable, con una curva de aprendizaje más pronunciada.</li>
+<li><strong><code>emacs</code></strong>: editor extensible con múltiples
+funcionalidades.</li>
+</ul>
+<p>En este módulo utilizaremos <strong><code>nano</code></strong> por su
+sencillez.</p>
+<h2 id="-abrir-un-archivo-con-nano">🚀 Abrir un archivo con
+<code>nano</code></h2>
+<p>Para editar el contenido de un archivo con <code>nano</code>,
+escribimos el nombre del comando seguido del archivo que queremos
+editar:</p>
+<pre class="bash"><code>nano /home/usuario/Escritorio/prueba.txt</code></pre>
+<p>Si el archivo existe, <code>nano</code> abrirá su contenido para
+editarlo. Si no existe, creará un archivo nuevo con ese nombre.</p>
+<p>La interfaz de <code>nano</code> muestra:</p>
+<ul>
+<li>En la parte superior: el nombre del archivo y si ha sido
+modificado.</li>
+<li>En el centro: el contenido del archivo (o un espacio vacío si es
+nuevo).</li>
+<li>En la parte inferior: una barra con los atajos de teclado más
+utilizados.</li>
+</ul>
+<p><img src="/assets/nano_editor.png"
+alt="Interfaz del editor nano" /></p>
+<h2 id="-editar-texto">📝 Editar texto</h2>
+<p>Una vez dentro de <code>nano</code>, podemos escribir y modificar
+texto con total normalidad, igual que haríamos en cualquier editor de
+texto:</p>
+<ul>
+<li>Usamos las <strong>flechas del teclado</strong> para desplazarnos
+por el archivo.</li>
+<li>Escribimos texto directamente con el teclado.</li>
+<li>Utilizamos las teclas <strong>Supr</strong> o
+<strong>Retroceso</strong> para borrar caracteres.</li>
+</ul>
+<h2 id="-guardar-y-salir">💾 Guardar y salir</h2>
+<p>Los atajos de <code>nano</code> se combinan con la tecla
+<strong>Ctrl</strong> (representada con el símbolo <code>^</code> en la
+parte inferior de la pantalla). Otros atajos, indicados con
+<code>M-</code>, requieren la tecla <strong>Alt</strong> (también
+llamada <em>Meta</em>).</p>
+<h3 id="guardar-el-archivo">Guardar el archivo</h3>
+<p>Para guardar los cambios, pulsamos:</p>
+<pre><code>Ctrl + O</code></pre>
+<p><code>nano</code> nos pedirá confirmación del nombre del archivo.
+Pulsa <strong>Enter</strong> para aceptar.</p>
+<h3 id="salir-de-nano">Salir de <code>nano</code></h3>
+<p>Para salir del editor, pulsamos:</p>
+<pre><code>Ctrl + X</code></pre>
+<p>Si hemos hecho cambios y no los hemos guardado, <code>nano</code> nos
+preguntará si queremos guardarlos antes de salir.</p>
+<h3 id="guardar-y-salir-rápidamente">Guardar y salir rápidamente</h3>
+<p>Podemos guardar y salir en dos pasos:</p>
+<ol type="1">
+<li><code>Ctrl + O</code> para guardar.</li>
+<li><code>Ctrl + X</code> para salir.</li>
+</ol>
+<h2 id="-buscar-texto-dentro-del-archivo">🔍 Buscar texto dentro del
+archivo</h2>
+<p>Para buscar una palabra o texto dentro del archivo que estamos
+editando:</p>
+<pre><code>Ctrl + W</code></pre>
+<p><code>nano</code> nos pedirá el texto a buscar. Escribimos la palabra
+y pulsamos <strong>Enter</strong>. Para buscar la siguiente
+coincidencia, volvemos a pulsar <code>Ctrl + W</code> y luego
+<strong>Enter</strong> sin escribir nada.</p>
+<h2 id="-reemplazar-texto">🔄 Reemplazar texto</h2>
+<p>Para buscar y reemplazar texto:</p>
+<pre><code>Ctrl + \</code></pre>
+<p><code>nano</code> nos pedirá:</p>
+<ol type="1">
+<li>El texto a buscar.</li>
+<li>El texto por el que queremos reemplazarlo.</li>
+</ol>
+<p>Después nos preguntará si deseamos confirmar cada reemplazo
+individualmente o cambiar todos a la vez.</p>
+<h2 id="-cortar-copiar-y-pegar-líneas">📋 Cortar, copiar y pegar
+líneas</h2>
+<p><code>nano</code> permite manipular líneas completas de texto. Para
+trabajar con selecciones se utilizan los atajos con la tecla
+<strong>Alt</strong>.</p>
+<h3 id="marcar-texto-para-seleccionarlo">Marcar texto para
+seleccionarlo</h3>
+<pre><code>Alt + A</code></pre>
+<p>Activa el modo de selección (marcar). Desplázate con las flechas para
+seleccionar el texto deseado.</p>
+<h3 id="cortar-la-línea-seleccionada">Cortar la línea seleccionada</h3>
+<pre><code>Ctrl + K</code></pre>
+<p>Corta la línea actual (o la selección) y la almacena en el
+portapapeles interno de <code>nano</code>.</p>
+<h3 id="copiar-la-línea-seleccionada">Copiar la línea seleccionada</h3>
+<pre><code>Alt + 6</code></pre>
+<p>Copia la línea actual (o la selección) sin eliminarla del
+archivo.</p>
+<h3 id="pegar-el-texto-cortado-o-copiado">Pegar el texto cortado o
+copiado</h3>
+<pre><code>Ctrl + U</code></pre>
+<p>Pega el contenido del portapapeles en la posición actual del
+cursor.</p>
+<h3 id="-ejemplo-mover-una-línea">💡 Ejemplo: Mover una línea</h3>
+<ol type="1">
+<li>Colocaremos el cursor sobre la línea que deseamos mover.</li>
+<li>Pulsa <code>Ctrl + K</code> para cortarla.</li>
+<li>Desplaza el cursor a la nueva ubicación.</li>
+<li>Pulsa <code>Ctrl + U</code> para pegarla.</li>
+</ol>
+<h2 id="️-deshacer-y-rehacer-cambios">↩︎️ Deshacer y rehacer
+cambios</h2>
+<p>Si cometemos un error, podemos <strong>deshacer</strong> la última
+acción con:</p>
+<pre><code>Alt + U</code></pre>
+<p>Y <strong>rehacer</strong> lo deshecho con:</p>
+<pre><code>Alt + E</code></pre>
+<p>⚠️ No utilices <code>Ctrl + Z</code> para deshacer: en la consola esa
+combinación <em>suspende</em> el programa (lo deja en segundo plano) y
+no deshace ningún cambio.</p>
+<h2 id="️-consejos-útiles">⚠️ Consejos útiles</h2>
+<ul>
+<li>Antes de guardar, verifica en la parte superior de la pantalla que
+estás editando el archivo correcto. Una vez guardados los cambios, no
+podremos volver atrás.</li>
+<li>Si quieres descartar todos los cambios sin guardar, pulsa
+<code>Ctrl + X</code> y responde <strong>N</strong> cuando
+<code>nano</code> pregunte si deseas guardar.</li>
+<li>Para ver la ayuda completa de <code>nano</code>, pulsa
+<code>Ctrl + G</code> dentro del editor.</li>
+</ul>
+<h2 id="-resumen-de-atajos-de-teclado">📋 Resumen de atajos de
+teclado</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Atajo</th>
+<th style="text-align: left;">Para qué sirve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + O</code></td>
+<td style="text-align: left;">Guardar el archivo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + X</code></td>
+<td style="text-align: left;">Salir de nano</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + W</code></td>
+<td style="text-align: left;">Buscar texto</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Ctrl + \</code></td>
+<td style="text-align: left;">Buscar y reemplazar</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + K</code></td>
+<td style="text-align: left;">Cortar línea o selección</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Alt + 6</code></td>
+<td style="text-align: left;">Copiar línea o selección</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + U</code></td>
+<td style="text-align: left;">Pegar línea</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Alt + A</code></td>
+<td style="text-align: left;">Iniciar selección (marcar)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Alt + U</code></td>
+<td style="text-align: left;">Deshacer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Alt + E</code></td>
+<td style="text-align: left;">Rehacer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Ctrl + G</code></td>
+<td style="text-align: left;">Ayuda</td>
+</tr>
+</tbody>
+</table>

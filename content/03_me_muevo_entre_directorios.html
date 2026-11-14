@@ -1,0 +1,175 @@
+<h1 id="la-consola-de-comandos-parte-iii">La consola de comandos. Parte
+III</h1>
+<h2 id="-me-muevo-entre-directorios-el-comando-cd">🚶 Me muevo entre
+directorios. El comando <code>cd</code></h2>
+<p>En la lección anterior hemos visto cómo orientarnos dentro del
+sistema de archivos utilizando comandos como <code>pwd</code> y
+<code>ls</code>. Mediante ellos, hemos podido responder a preguntas
+tales como:</p>
+<ul>
+<li>¿Dónde estoy? → <code>pwd</code> (<em>print working
+directory</em>)</li>
+<li>¿Qué archivos y directorios hay en mi ubicación actual? →
+<code>ls</code> (<em>list</em>)</li>
+</ul>
+<p>En el presente módulo y para seguir avanzando de manera lógica, llega
+el momento de <strong>aprender a desplazarnos por los diferentes
+directorios</strong> del sistema.</p>
+<p>Para ello utilizaremos el comando <code>cd</code>, del inglés
+<strong>change directory</strong> (<em>cambiar directorio</em>) el cual
+permite desplazarnos entre directorios y cambiar nuestra ubicación
+actual dentro del sistema de archivos.</p>
+<pre class="bash"><code>cd</code></pre>
+<h2 id="-cambiar-a-un-directorio">📂 Cambiar a un directorio</h2>
+<p>La forma básica de utilizar <code>cd</code> es:</p>
+<pre class="bash"><code># Cambiar nuestra ubicación a un directorio concreto
+cd ruta_del_nuevo_directorio</code></pre>
+<p>Ejemplo:</p>
+<pre class="bash"><code>cd Documentos</code></pre>
+<p>La shell cambiará nuestra ubicación actual al directorio
+<code>Documentos</code>.</p>
+<p>Podemos comprobar dónde nos encontramos utilizando:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p><img src="/assets/cd_ejemplo.png" alt="Uso del comando cd" /></p>
+<h3 id="️-rutas-absolutas-y-relativas-con-cd">🛣️ Rutas absolutas y
+relativas con <code>cd</code></h3>
+<p>En la lección anterior ya vimos qué son las rutas absolutas y
+relativas. Ahora veremos cómo se utilizan con el comando
+<code>cd</code>, ya que serán la forma habitual de indicar a qué
+directorio queremos desplazarnos.</p>
+<p>Cuando utilizamos comandos como <code>cd</code>, podemos indicar el
+directorio de destino de dos formas diferentes:</p>
+<ul>
+<li><strong>Ruta absoluta</strong>: especifica la ubicación completa de
+un archivo o directorio, comenzando siempre desde el directorio raíz
+(<code>/</code>).</li>
+<li><strong>Ruta relativa</strong>: especifica la ubicación tomando como
+referencia el directorio en el que nos encontramos actualmente.</li>
+</ul>
+<h3 id="-ejemplo-con-ruta-absoluta">💡 Ejemplo con ruta absoluta</h3>
+<pre class="bash"><code># Ejemplo de ruta absoluta
+cd /home/usuario/Descargas</code></pre>
+<p>Con este comando accederemos al directorio <code>Descargas</code>,
+independientemente del directorio en el que nos encontremos en ese
+momento.</p>
+<h3 id="-ejemplo-con-ruta-relativa">💡 Ejemplo con ruta relativa</h3>
+<pre class="bash"><code># Ejemplo de ruta relativa
+cd Descargas</code></pre>
+<p>Este comando solo funcionará si el directorio <code>Descargas</code>
+existe dentro del directorio en el que nos encontramos actualmente.</p>
+<p>Por ejemplo, si al ejecutar:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>obtenemos:</p>
+<pre class="text"><code>/home/usuario</code></pre>
+<p>La shell interpretará que <code>Descargas</code> se encuentra dentro
+de nuestro directorio actual, por lo que el comando anterior nos llevará
+a:</p>
+<pre class="text"><code>/home/usuario/Descargas</code></pre>
+<p>En cambio, si nuestra ubicación actual fuera distinta, por
+ejemplo:</p>
+<pre class="text"><code>/etc</code></pre>
+<p>el comando:</p>
+<pre class="bash"><code>cd Descargas</code></pre>
+<p>intentaría acceder al directorio:</p>
+<pre class="text"><code>/etc/Descargas</code></pre>
+<p>Como dicho directorio normalmente no existe (a no ser que lo hayamos
+creado nosotros de manera intencionada), se nos mostrará un mensaje
+indicando que no existe.</p>
+<p><img src="/assets/cd_no_existe_directorio.png"
+alt="cd no existe directorio" /></p>
+<h2 id="-volver-al-directorio-personal">🏠 Volver al directorio
+personal</h2>
+<p>Para volver al directorio personal del usuario utilizamos nuevamente
+<code>cd</code> seguido del símbolo virgulilla <code>~</code>:</p>
+<pre class="bash"><code># Cambiar al directorio personal (forma 1)
+cd ~</code></pre>
+<p>El símbolo <code>~</code> representa el directorio personal del
+usuario actual.</p>
+<p>También podemos utilizar:</p>
+<pre class="bash"><code># Cambiar al directorio personal (forma 2)
+cd</code></pre>
+<p>Sin argumentos, <code>cd</code> vuelve directamente al directorio
+personal.</p>
+<p><img src="/assets/cd_cambiar_a_directorio_personal.png"
+alt="cd cambiar a directorio personal" /></p>
+<h2 id="️-subir-un-nivel-en-el-árbol-de-directorios">⬆️ Subir un nivel
+en el árbol de directorios</h2>
+<p>Los dos puntos <code>..</code> representan el directorio padre
+(inmediatamente anterior al actual).</p>
+<p>Ejemplo:</p>
+<pre class="bash"><code># Subir al directorio &quot;padre&quot;. ⚠️ Debemos dejar un espacio entre `cd` y los puntos.
+cd ..</code></pre>
+<p>Si estamos en:</p>
+<pre class="text"><code>/home/usuario/Documentos</code></pre>
+<p>pasaremos a:</p>
+<pre class="text"><code>/home/usuario</code></pre>
+<h2 id="-el-directorio-actual-">📍 El directorio actual:
+<code>.</code></h2>
+<p>El punto individual representa el directorio actual.</p>
+<p>Ejemplo:</p>
+<pre class="bash"><code>ls .</code></pre>
+<p>equivale a:</p>
+<pre class="bash"><code>ls</code></pre>
+<h2 id="-volver-al-directorio-anterior">🔙 Volver al directorio
+anterior</h2>
+<p>Bash permite regresar rápidamente a la última ubicación escribiendo
+<code>cd -</code>:</p>
+<pre class="bash"><code># Volver al directorio anterior
+cd -</code></pre>
+<p>Por ejemplo, si nos hemos desplazado desde <code>Documentos</code> a
+<code>Descargas</code>, utilizando <code>-</code> como argumento
+especial del comando <code>cd</code> volveremos inmediatamente a
+<code>Documentos</code>.</p>
+<pre class="bash"><code>cd Documentos
+cd Descargas
+cd -</code></pre>
+<p><img src="/assets/cd_volver_directorio_anterior.png"
+alt="Volver al directorio anterior con cd -" /></p>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cd carpeta</code></td>
+<td style="text-align: left;">Entra en un directorio concreto</td>
+<td style="text-align: left;"><code>cd Descargas</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd /ruta/completa</code></td>
+<td style="text-align: left;">Accede mediante una ruta absoluta</td>
+<td
+style="text-align: left;"><code>cd /home/usuario/Descargas</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd ~</code></td>
+<td style="text-align: left;">Va al directorio personal del usuario</td>
+<td style="text-align: left;"><code>cd ~</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd</code></td>
+<td style="text-align: left;">Vuelve al directorio personal</td>
+<td style="text-align: left;"><code>cd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd ..</code></td>
+<td style="text-align: left;">Sube al directorio padre</td>
+<td style="text-align: left;"><code>cd ..</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd .</code></td>
+<td style="text-align: left;">Hace referencia al directorio actual</td>
+<td style="text-align: left;"><code>cd .</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd -</code></td>
+<td style="text-align: left;">Vuelve al directorio anterior</td>
+<td style="text-align: left;"><code>cd -</code></td>
+</tr>
+</tbody>
+</table>

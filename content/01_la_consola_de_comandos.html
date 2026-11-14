@@ -1,0 +1,267 @@
+<h1 id="la-consola-de-comandos-parte-i">La consola de comandos. Parte
+I</h1>
+<h2 id="-qué-es">❓ ¿Qué es?</h2>
+<p>En sistemas Linux (y otros de tipo Unix), el usuario puede
+interactuar con el sistema operativo mediante una <strong>consola de
+comandos</strong>. En ella se escriben instrucciones que el sistema
+interpreta y ejecuta.</p>
+<p>Desde un punto de vista técnico, esta interacción se realiza a través
+de mecanismos como los <strong>TTY</strong> (<em>Teletypewriter</em>) y
+los <strong>pseudoterminales (PTY)</strong>.</p>
+<ul>
+<li><strong>TTY</strong> real o consola pura: cuando, por ejemplo,
+instalas Debian sin entorno gráfico, la primera pantalla que nos permite
+hacer <em>login</em> sería una consola TTY <em>real</em>.</li>
+<li><strong>PTY</strong> pseudoterminales o emuladores de terminal:
+cuando ya estamos en un equipo que dispone de entorno gráfico (KDE,
+Gnome, XFCE...) y abres una aplicación tipo:
+<ul>
+<li>Konsole (KDE Plasma)</li>
+<li>Terminal GNOME</li>
+<li>Xterm</li>
+<li>...</li>
+</ul></li>
+</ul>
+<h2 id="-shell">🔨 Shell</h2>
+<p>Continuando una secuencia lógica de eventos, llega el momento ahora
+de hablar de la Shell.<br />
+<strong>La Shell es un intérprete de órdenes (<em>command
+interpreter</em>).</strong> Recibe los comandos escritos por el usuario,
+los interpreta y, cuando es necesario, ejecuta los programas
+correspondientes. Es importante destacar que la Shell no es el sistema
+operativo de nuestro equipo, sino un programa que actúa como
+intermediario entre el usuario y el sistema.<br />
+Por ejemplo, si queremos listar el contenido de un directorio
+utilizaremos el comando <code>ls</code>, el cual es un programa externo
+que la shell ejecuta cuando el usuario lo invoca.</p>
+<pre class="bash"><code># Esto listará el contenido de la carpeta de descargas del usuario.
+ls /home/usuario/Descargas</code></pre>
+<h3 id="tipos-de-shell">Tipos de Shell</h3>
+<p>En los sistemas Linux existen diferentes programas capaces de
+interpretar los comandos del usuario. Todos ellos reciben el nombre de
+Shell, aunque presentan pequeñas diferencias en su funcionamiento,
+sintaxis y características.</p>
+<p>Algunas de las más conocidas son:</p>
+<p><strong>Bash</strong> (<em>Bourne Again SHell</em>): es la Shell más
+utilizada en la mayoría de distribuciones Linux y la que emplearemos
+durante este curso. Destaca por su equilibrio entre sencillez y
+potencia, además de ser el estándar en la administración de sistemas.
+<strong>sh</strong> (<em>Bourne Shell</em>): es la Shell clásica de
+Unix. Muchas Shell modernas mantienen compatibilidad con ella para
+facilitar la ejecución de scripts antiguos. <strong>Zsh</strong> (<em>Z
+Shell</em>): incorpora numerosas mejoras orientadas a la productividad,
+como autocompletado avanzado, corrección de errores al escribir comandos
+y una gran capacidad de personalización. Es la Shell predeterminada en
+versiones recientes de macOS. <strong>Fish</strong> (<em>Friendly
+Interactive SHell</em>): diseñada para facilitar el trabajo interactivo
+gracias a una sintaxis sencilla, sugerencias automáticas y una
+configuración muy amigable para usuarios principiantes.
+<strong>Ksh</strong> (<em>Korn Shell</em>): muy utilizada históricamente
+en entornos Unix empresariales y conocida por sus buenas capacidades
+para <em>scripting</em>.</p>
+<p>Aunque existen numerosas Shell, los comandos básicos que aprenderemos
+durante este curso funcionan de la misma forma en prácticamente todas
+ellas.</p>
+<pre class="bash"><code># Para saber qué Shell estás usando ejecuta:
+echo $SHELL
+
+# El comando echo muestra en pantalla el texto que recibe como argumento
+# $SHELL es una variable de entorno que almacena información sobre la Shell del usuario.
+# Así entonces, $SHELL mostrará en pantalla qué tipo de Shell tenemos en nuestro equipo</code></pre>
+<p><img src="/assets/shell_usuario_bash.png" alt="Shell usuario" /></p>
+<h2 id="-estructura-de-un-comando">👌🏼 Estructura de un comando</h2>
+<p>La mayoría de comandos en Linux siguen una estructura muy similar a
+la siguiente:</p>
+<pre class="bash"><code>comando [opciones] [argumentos]</code></pre>
+<p>Donde:</p>
+<ul>
+<li><strong>Comando</strong>: es el programa que queremos ejecutar.</li>
+<li><strong>Opciones</strong>: modifican el comportamiento del comando y
+suelen ser opcionales.</li>
+<li><strong>Argumentos</strong>: indican sobre qué elemento queremos que
+actúe el comando (un archivo concreto, un directorio, un texto...).</li>
+</ul>
+<pre class="bash"><code># Muestra el contenido completo de un directorio
+ls -a /home/usuario/Descargas</code></pre>
+<p>En el ejemplo anterior: |Elemento |Valor |Descripción |
+|:--------|:---------------------------|:------------------------------------------|
+|Comando |<code>ls</code> |Lista el contenido de un directorio | |Opción
+|<code>-a</code> |Incluye también los archivos ocultos |
+|Argumento|<code>/home/usuario/Descargas</code>|Directorio cuyo
+contenido queremos mostrar |</p>
+<p>Las <strong>opciones</strong> normalmente disponen de una versión
+corta (precedida por un guion <code>-</code>) y, en muchos casos, de una
+versión larga (precedida por dos guiones <code>--</code>). Haciendo uso
+del ejemplo anterior, también podríamos ver el contenido completo de un
+directorio (con sus archivos ocultos) ejecutando la siguiente
+instrucción:</p>
+<pre class="bash"><code>ls --all /home/usuario/Descargas</code></pre>
+<p>Veamos algunos ejemplos más:</p>
+<pre class="bash"><code># Muestra el tamaño del archivo &quot;prueba.txt&quot;
+ls -s /home/usuario/Escritorio/prueba.txt
+
+# Si combinamos la opción &quot;s&quot; con &quot;h&quot;, de &quot;human&quot; obtendremos el tamaño del archivo en Kb, MB, GB...
+ls -sh /home/usuario/Escritorio/prueba.txt</code></pre>
+<p><img src="/assets/tamano_archivo.png" alt="Tamaño de un archivo" />
+Cada comando dispone de su propio manual, donde se describen todas sus
+opciones y ejemplos de uso. Para acceder a él utilizaremos el comando
+<code>man</code> seguido del nombre del comando que queremos
+consultar.</p>
+<pre class="bash"><code>man cat</code></pre>
+<p><img src="/assets/cat_man.png" alt="Manual del comando CAT" /></p>
+<pre class="bash"><code>cat --version</code></pre>
+<p><img src="/assets/cat_version.png"
+alt="Versión del comando CAT" /></p>
+<h2 id="-de-qué-manera-utiliza-el-usuario-la-consola-de-comandos">🙇🏻 ¿De
+qué manera utiliza el usuario la consola de comandos?</h2>
+<p>La interacción con el sistema a través de la consola puede realizarse
+de distintas formas:</p>
+<ul>
+<li>Mediante un <strong>terminal físico</strong> o local, es decir, un
+dispositivo conectado directamente al sistema (pantalla y teclado).</li>
+<li>Mediante un <strong>terminal virtual</strong>, como ocurre al
+conectarse a otro equipo o servidor remoto usando <strong>SSH</strong> u
+otros protocolos de acceso remoto.</li>
+</ul>
+<h2 id="-canales-básicos-de-comunicación-con-el-sistema">📝 Canales
+básicos de comunicación con el sistema</h2>
+<p>Los programas que se ejecutan en la consola utilizan tres canales
+estándar de comunicación, conocidos como <strong>flujos
+estándar</strong>:</p>
+<ol type="1">
+<li><p><strong>STDIN (Standard Input)</strong>:<br />
+Canal de entrada estándar. Por él entran los datos que recibe un
+programa, ya sea desde el teclado, desde un archivo o desde la salida de
+otro comando.</p></li>
+<li><p><strong>STDOUT (Standard Output)</strong>:<br />
+Canal de salida estándar. Por él se envían los resultados normales de la
+ejecución de un programa, que habitualmente se muestran en la
+pantalla.</p></li>
+<li><p><strong>STDERR (Standard Error)</strong>:<br />
+Canal de salida de error estándar. Se utiliza para mostrar mensajes de
+error o advertencias, y está separado de la salida estándar para poder
+gestionarlos de forma independiente.</p></li>
+</ol>
+<p>🔢 Cada uno de ellos tiene un número representativo: | Flujo | Número
+| |:-----:|:------:| |STDIN |0 | |STDOUT |1 | |STDERR |2 |</p>
+<h2 id="-guía-rápida-de-redirecciones-en-bash">📄 Guía rápida de
+redirecciones en Bash</h2>
+<h3 id="redirigir-salida-a-un-archivo">Redirigir salida a un
+archivo</h3>
+<ol type="1">
+<li>Guarda el resultado de un comando en un archivo (⚠️ cuidado, si el
+archivo existe, lo sobrescribe).</li>
+</ol>
+<pre class="bash"><code>cat mi_archivo.txt &gt; salida.txt</code></pre>
+<ol start="2" type="1">
+<li>Teniendo en cuenta el esquema de números representativos anterior,
+otra forma equivalente de escribir lo mismo sería:</li>
+</ol>
+<pre class="bash"><code>cat mi_archivo.txt 1&gt; salida.txt</code></pre>
+<ol start="3" type="1">
+<li>Para añadir el contenido al final del archivo si este ya existe
+(esta opción no borrará el contenido del archivo, añadirá en el mismo la
+nueva información):</li>
+</ol>
+<pre class="bash"><code>cat mi_archivo.txt &gt;&gt; salida.txt</code></pre>
+<h3 id="redirigir-errores">Redirigir errores</h3>
+<ol start="4" type="1">
+<li>Guardar el mensaje de error, por ejemplo, si un archivo no
+existe:</li>
+</ol>
+<pre class="bash"><code>ls ~/Escritorio/foto_inexistente.jpeg 2&gt; error.txt</code></pre>
+<h3 id="salida-y-errores-juntos">Salida y errores juntos</h3>
+<ol start="5" type="1">
+<li>Combina STDOUT y STDERR en un mismo archivo:</li>
+</ol>
+<pre class="bash"><code>ls ~ &amp;&gt; salida_y_errores.txt</code></pre>
+<p>Si deseamos descartar la salida STDOUT o STDERR podemos enviar la
+información a /dev/null. Esta ruta eliminará la información de
+salida.</p>
+<pre class="bash"><code>ls ~/Escritorio/foto_inexistente.png 2&gt; /dev/null</code></pre>
+<h2
+id="-ejemplo-listar-las-carpetas-del-directorio-home-y-copiarlas-en-un-archivo">💡
+Ejemplo: Listar las carpetas del directorio home y copiarlas en un
+archivo</h2>
+<pre class="bash"><code>ls ~ &gt; /home/usuario/Escritorio/directorio.txt</code></pre>
+<p><img src="/assets/stdout_archivo.png" alt="STDOUT a archivo" />
+Siguiendo el esquema de números representativos anterior, otra manera de
+escribir lo mismo sería:</p>
+<pre class="bash"><code>ls ~ 1&gt; /home/usuario/Escritorio/directorio.txt</code></pre>
+<h2
+id="-ejemplo-listar-un-archivo-inexistente-y-copiar-el-mensaje-de-error-a-archivo">💡
+Ejemplo: Listar un archivo inexistente y copiar el mensaje de error a
+archivo</h2>
+<pre class="bash"><code>ls archivo_que_no_existe.png</code></pre>
+<p>Al no encontrar el archivo en el directorio especificado, la consola
+muestra un mensaje de error (STDERR) indicando que no se puede acceder
+porque no existe el fichero.</p>
+<p><img src="/assets/stderr.png" alt="STDERR" /> En el siguiente ejemplo
+le indicamos a la consola que queremos guardar la salida en un archivo
+en particular.</p>
+<pre class="bash"><code>ls archivo_que_no_existe.png &gt; salida.txt</code></pre>
+<p>Lo que ocurrirá es que la consola seguirá mostrando el error
+indicando que no existe el archivo pero el documento <em>salida.txt</em>
+aparecerá vacío. ¿Por qué pasa esto? Porque al no encontrar archivo, la
+salida está vacía. Si lo que queremos es guardar el mensaje de error
+deberemos hacerlo de la siguiente manera:</p>
+<pre class="bash"><code>ls archivo_que_no_existe.png 2&gt; salida.txt</code></pre>
+<p><img src="/assets/stderr2.png" alt="STDERR a archivo" /></p>
+<h2 id="-ejemplo-buscar-un-texto-en-un-archivo">💡 Ejemplo: Buscar un
+texto en un archivo</h2>
+<pre class="bash"><code>grep eth0 &lt; interfaces.txt</code></pre>
+<ul>
+<li><code>&lt;</code>: El símbolo <em>menor que</em> indica que vamos a
+usar el archivo <em>interfaces.txt</em> como fuente de información de
+entrada (STDIN).</li>
+<li><code>grep</code>: El comando <em>grep</em> buscará en el archivo la
+palabra que intentamos encontrar, <em>eth0</em>.</li>
+</ul>
+<p><img src="/assets/stdin_stdout.png" alt="STDIN y STDOUT" /></p>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>echo</code></td>
+<td style="text-align: left;">Muestra un texto o el contenido de una
+variable en pantalla</td>
+<td style="text-align: left;"><code>echo $SHELL</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ls</code></td>
+<td style="text-align: left;">Lista el contenido de un directorio</td>
+<td
+style="text-align: left;"><code>ls /home/usuario/Descargas</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>man</code></td>
+<td style="text-align: left;">Muestra el manual de ayuda de un
+comando</td>
+<td style="text-align: left;"><code>man cat</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Muestra el contenido de un archivo</td>
+<td style="text-align: left;"><code>cat archivo.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep</code></td>
+<td style="text-align: left;">Busca un texto concreto dentro de un
+archivo o entrada de datos</td>
+<td
+style="text-align: left;"><code>grep eth0 &lt; interfaces.txt</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="️-resumen-en-formato-gráfico">🖼️ Resumen en formato gráfico</h2>
+<p><img src="/assets/terminal_shell_bash.png"
+alt="Terminal vs Shell vs Bash" /> Descarga desde aquí: <a
+href="/assets/terminal_shell_bash.png">Consola vs Terminal vs Shell vs
+Bash</a></p>

@@ -1,0 +1,141 @@
+<h1 id="la-consola-de-comandos-parte-v">La consola de comandos. Parte
+V</h1>
+<h2 id="-trabajo-con-archivos-de-texto">📄 Trabajo con archivos de
+texto</h2>
+<p>En el módulo anterior hemos aprendido a crear, copiar, mover y
+eliminar archivos y directorios. Llega el momento de <strong>consultar
+el contenido de esos archivos</strong>.</p>
+<p>Veamos ahora cómo utilizar distintos comandos para visualizar
+archivos de texto, cada uno pensado para una situación diferente.</p>
+<h2 id="-mostrar-el-contenido-completo-el-comando-cat">📄 Mostrar el
+contenido completo. El comando <code>cat</code></h2>
+<p>El comando <code>cat</code> (del inglés <em>concatenate</em>) muestra
+el contenido de uno o varios archivos.</p>
+<pre class="bash"><code>cat Escritorio/lorem-ipsum.txt</code></pre>
+<p><img src="/assets/cat_ejemplo_lorem_ipsum.png"
+alt="Ejemplo cat" /></p>
+<p>También podemos mostrar varios archivos seguidos:</p>
+<pre class="bash"><code>cat Escritorio/lorem-ipsum.txt Escritorio/lorem-ipsum-2.txt</code></pre>
+<p><img src="/assets/cat_ejemplo_lorem_ipsum2.png"
+alt="Ejemplo cat 2 archivos" /></p>
+<p>⚠️ <code>cat</code> resulta muy cómodo para archivos pequeños. Si el
+archivo contiene cientos de líneas, el contenido pasa demasiado deprisa
+y es muy difícil hacer un seguimiento real del mismo.</p>
+<h3 id="-numerar-líneas-con-la-opción--n">🔢 Numerar líneas con la
+opción <code>-n</code></h3>
+<p>Una herramienta que puede ayudarnos a identificar mediante números
+cada una de las líneas del archivo es la opción <code>-n</code>.
+Imaginémonos que tenemos un script (automatización) que nos está
+arrojando un error en una línea en concreto. Usando esta opción podremos
+revisarla de manera rápida y directa.</p>
+<pre class="bash"><code>cat -n Escritorio/copia.sh</code></pre>
+<p><img src="/assets/cat_enumerar.png" alt="Opción -n cat" /></p>
+<h2 id="-leer-archivos-grandes-el-comando-less">📖 Leer archivos
+grandes. El comando <code>less</code></h2>
+<p>Cuando el archivo es muy largo resulta mucho más cómodo utilizar
+<code>less</code>. A diferencia de <code>cat</code>, <code>less</code>
+no muestra el archivo de golpe sino que se detiene para que tengamos
+tiempo a analizar con pausa el archivo. Es un comando realmente útil ya
+que gracias a él podemos desplazarnos por el contenido del archivo
+usando:</p>
+<ul>
+<li>Flechas ↑ ↓</li>
+<li>AvPág</li>
+<li>RePág</li>
+<li>Barra espaciadora (avanza una página)</li>
+<li>q (salir)</li>
+</ul>
+<pre class="bash"><code>less Escritorio/prueba.txt</code></pre>
+<p><img src="/assets/less_ejemplo.png"
+alt="Ejemplo de uso comando less" /></p>
+<h2 id="️-ver-las-primeras-líneas-el-comando-head">⬆️ Ver las primeras
+líneas. El comando <code>head</code></h2>
+<p>Por defecto, el comando <code>head</code> muestra las diez primeras
+líneas de nuestro archivo. Aun así, tenemos otras opciones y una de las
+más interesantes es <code>-n</code> donde podremos establecer cuántas
+líneas queremos ver empezando por el principio.</p>
+<pre class="bash"><code>head Descargas/alumnos.csv</code></pre>
+<p><img src="/assets/head_ejemplo.png" alt="Ejemplo comando head" /></p>
+<p>Para mostrar, por ejemplo las 3 primeras líneas del archivo lo
+haríamos de la siguiente manera:</p>
+<pre class="bash"><code>head -n 3 Descargas/alumnos.csv</code></pre>
+<p><img src="/assets/head_opcion_numero.png"
+alt="Mostrar n filas en el comando head" /></p>
+<h2 id="️-ver-las-últimas-líneas-el-comando-tail">⬇️ Ver las últimas
+líneas. El comando <code>tail</code></h2>
+<p>Prácticamente idéntico es el comando <code>tail</code>. En este caso,
+podremos ver el contenido de un fichero empezando por el final del
+mismo. Es un comando que puede tener mucha utilidad si, por ejemplo,
+revisamos logs de un servicio y queremos ver qué ha pasado en última
+instancia.</p>
+<pre class="bash"><code>tail Descargas/registro.log</code></pre>
+<p><img src="/assets/tail_ejemplo.png" alt="Ejemplo tail" /></p>
+<p>Si quisiéramos mostrar X líneas lo haríamos también haciendo uso de
+la opción <code>-n</code>:</p>
+<pre class="bash"><code>tail -n 20 Descargas/registro.log</code></pre>
+<h2 id="-ejemplo-revisar-un-listado-de-alumnos">💡 Ejemplo: Revisar un
+listado de alumnos</h2>
+<pre class="bash"><code># Ver todo el archivo
+cat alumnos.txt
+
+# Leer cómodamente el archivo usando las flechas del teclado, avance y retroceso de página... Recuerda `q` para salir
+less alumnos.txt
+
+# Mostrar únicamente las 5 primeras líneas
+head -n 5 alumnos.txt
+
+# Mostrar únicamente las 20 últimas líneas
+tail -n 20 alumnos.txt
+</code></pre>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Muestra el contenido completo de un
+archivo</td>
+<td style="text-align: left;"><code>cat notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cat -n</code></td>
+<td style="text-align: left;">Muestra el contenido numerando las
+líneas</td>
+<td style="text-align: left;"><code>cat -n notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>less</code></td>
+<td style="text-align: left;">Permite leer archivos largos
+cómodamente</td>
+<td style="text-align: left;"><code>less manual.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>head</code></td>
+<td style="text-align: left;">Muestra las primeras líneas</td>
+<td style="text-align: left;"><code>head alumnos.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>head -n</code></td>
+<td style="text-align: left;">Muestra un número concreto de líneas
+iniciales</td>
+<td style="text-align: left;"><code>head -n 5 alumnos.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tail</code></td>
+<td style="text-align: left;">Muestra las últimas líneas</td>
+<td style="text-align: left;"><code>tail registro.log</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tail -n</code></td>
+<td style="text-align: left;">Muestra un número concreto de líneas
+finales</td>
+<td style="text-align: left;"><code>tail -n 20 registro.log</code></td>
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,522 @@
+<h1 id="la-consola-de-comandos-parte-vi">La consola de comandos. Parte
+VI</h1>
+<h2 id="-buscar-y-organizar-información-en-archivos-de-texto">🔎 Buscar
+y organizar información en archivos de texto</h2>
+<p>En el módulo anterior hemos aprendido a <strong>visualizar el
+contenido de los archivos de texto</strong> utilizando comandos como
+<code>cat</code>, <code>less</code>, <code>head</code> y
+<code>tail</code>.</p>
+<p>Sin embargo, cuando un archivo contiene muchas líneas, normalmente no
+necesitaremos leerlo completo. En muchas ocasiones querremos responder a
+preguntas más concretas:</p>
+<ul>
+<li>¿En qué líneas aparece una palabra determinada?</li>
+<li>¿Cuántas líneas contiene un archivo?</li>
+<li>¿Cuántas palabras hemos escrito?</li>
+<li>¿Cómo podemos ordenar una lista alfabética o numéricamente?</li>
+<li>¿Hay elementos repetidos?</li>
+</ul>
+<p>En este módulo aprenderemos a utilizar cuatro comandos que nos
+permitirán <strong>localizar, contar, ordenar y resumir
+información</strong> dentro de archivos de texto:</p>
+<ul>
+<li><code>grep</code>: busca líneas que contienen un texto o
+patrón.</li>
+<li><code>wc</code>: cuenta líneas, palabras y caracteres.</li>
+<li><code>sort</code>: ordena las líneas de un archivo.</li>
+<li><code>uniq</code>: identifica o elimina líneas repetidas
+consecutivas.</li>
+</ul>
+<p>Estos comandos no modifican el archivo original. El resultado de su
+ejecución se muestra en pantalla.</p>
+<h2 id="-buscar-texto-el-comando-grep">🔍 Buscar texto. El comando
+<code>grep</code></h2>
+<p>El comando <code>grep</code> permite <strong>buscar un texto dentro
+de uno o varios archivos</strong>. Como resultado, muestra en pantalla
+las líneas completas en las que ha encontrado alguna coincidencia.</p>
+<p>Su estructura básica es:</p>
+<pre class="bash"><code>grep &quot;texto_a_buscar&quot; archivo</code></pre>
+<p>Por ejemplo, imaginemos que disponemos de un archivo llamado
+<code>alumnos.csv</code> y queremos saber si la alumna "Eva" se
+encuentra en el archivo. Analizaremos entonces el contenido del mismo
+usando el siguiente comando:</p>
+<pre class="bash"><code>grep &quot;Eva&quot; Descargas/alumnos.csv</code></pre>
+<p><img src="/assets/grep_ejemplo.png" alt="Ejemplo comando grep" /></p>
+<p><code>grep</code> no muestra únicamente la palabra buscada, sino
+<strong>toda la línea en la que aparece</strong>.</p>
+<p>⚠️ Cabe recordar que Linux distingue entre mayúsculas y minúsculas
+(es <em>case sensitive</em>). Por tanto, <code>eva</code>,
+<code>Eva</code> y <code>EVA</code> se consideran textos diferentes.</p>
+<h3 id="-ignorar-mayúsculas-y-minúsculas-con-grep--i">🔡 Ignorar
+mayúsculas y minúsculas con <code>grep -i</code></h3>
+<p>La opción <code>-i</code> procede del inglés <em>ignore case</em> y
+permite realizar una búsqueda sin distinguir entre letras mayúsculas y
+minúsculas.</p>
+<pre class="bash"><code>grep -i &quot;eva&quot; Descargas/alumnos.csv</code></pre>
+<p>Este comando encontrará coincidencias como <code>eva</code>,
+<code>EVA</code> o <code>Eva</code>.</p>
+<h3 id="-mostrar-el-número-de-línea-con-grep--n">🔢 Mostrar el número de
+línea con <code>grep -n</code></h3>
+<p>La opción <code>-n</code>, al igual que en otros comandos vistos con
+anterioridad, muestra el número de cada línea en la que se ha encontrado
+una coincidencia.</p>
+<pre class="bash"><code>grep -n &quot;@ejemplo.com&quot; Descargas/alumnos.csv</code></pre>
+<p><img src="/assets/grep_ejemplo_numeros_coincidencia.png"
+alt="Ejemplo de numeración en el comando grep teniendo en cuenta coincidencias" /></p>
+<p>Esta opción resulta especialmente útil cuando necesitamos localizar
+rápidamente una información dentro de un archivo largo.</p>
+<h3 id="-mostrar-las-líneas-que-no-coinciden-con-grep--v">🚫 Mostrar las
+líneas que no coinciden con <code>grep -v</code></h3>
+<p>La opción <code>-v</code> invierte la búsqueda. En lugar de mostrar
+las líneas que contienen el texto indicado, muestra las que <strong>no
+lo contienen</strong>. En el ejemplo siguiente podemos ver cómo
+encontrar aquellos alumnos/as que tengan un dominio diferente a
+"ejemplo.com" en su dirección de correo electrónico.</p>
+<p>➕ Hemos añadido además la opción <code>-n</code> para disponer
+también de los números de línea.</p>
+<pre class="bash"><code>grep -nv &quot;@ejemplo.com&quot; Descargas/alumnos.csv</code></pre>
+<p><img src="/assets/grep_v_ejemplo.png" alt="Ejemplo grep -v" /></p>
+<h3 id="-contar-las-líneas-coincidentes-con-grep--c">🔢 Contar las
+líneas coincidentes con <code>grep -c</code></h3>
+<p>La opción <code>-c</code> (<em>count</em>) permite contar cuántas
+líneas contienen el texto buscado.</p>
+<pre class="bash"><code>grep -c &quot;@ejemplo.es&quot; Descargas/alumnos.csv</code></pre>
+<p>Siguiendo el ejemplo anterior y sabiendo que son solo 3 los
+alumnos/as que disponen de ese dominio, el resultado sería:</p>
+<pre class="text"><code>3</code></pre>
+<p>⚠️ Atención: <code>grep -c</code> cuenta <strong>líneas con
+coincidencias</strong>, no el número total de veces que aparece una
+palabra. Si una misma palabra aparece varias veces en una línea, esa
+línea se cuenta una sola vez.</p>
+<h3 id="-buscar-una-palabra-completa-con-grep--w">🧩 Buscar una palabra
+completa con <code>grep -w</code></h3>
+<p>La opción <code>-w</code> permite buscar una palabra completa y evita
+coincidencias dentro de palabras más largas.</p>
+<p>Imaginemos un archivo llamado <code>materias.txt</code>:</p>
+<pre class="text"><code>arte
+artesanía
+artes escénicas</code></pre>
+<p>El comando:</p>
+<pre class="bash"><code>grep &quot;arte&quot; Documentos/materias.txt</code></pre>
+<p>podría mostrar las tres líneas porque la secuencia
+<strong>arte</strong> forma parte de todas las palabras.</p>
+<p>En cambio:</p>
+<pre class="bash"><code>grep -w &quot;arte&quot; Documentos/materias.txt</code></pre>
+<p>mostrará únicamente la línea que contiene la palabra completa:</p>
+<p><img src="/assets/grep_palabras_contenido_similar.png"
+alt="Opción -w en el comando grep" /></p>
+<h3 id="-combinar-opciones-de-grep">➕ Combinar opciones de
+<code>grep</code></h3>
+<p>Como hemos visto con otros comandos, algunas opciones se pueden
+combinar.</p>
+<p>Por ejemplo:</p>
+<pre class="bash"><code>grep -in &quot;garcía&quot; Descargas/alumnos.csv</code></pre>
+<p>En este caso:</p>
+<ul>
+<li><code>-i</code> ignora las diferencias entre mayúsculas y
+minúsculas.</li>
+<li><code>-n</code> muestra el número de línea.</li>
+</ul>
+<p>También podríamos escribir las opciones por separado:</p>
+<pre class="bash"><code>grep -i -n &quot;garcía&quot; Descargas/alumnos.csv</code></pre>
+<h3 id="-buscar-en-varios-archivos">📂 Buscar en varios archivos</h3>
+<p><code>grep</code> también puede buscar un mismo texto en varios
+archivos a la vez.</p>
+<pre class="bash"><code>grep &quot;Aprobado&quot; Descargas/alumnos_grupo_A.txt Descargas/alumnos_grupo_B.txt</code></pre>
+<p>Cuando se consultan varios archivos, <code>grep</code> indica delante
+de cada coincidencia el nombre del archivo en el que la ha
+encontrado.</p>
+<p><img src="/assets/grep_buscar_varios_archivos.png"
+alt="Buscar con grep en diversos archivos" /></p>
+<h2 id="-contar-líneas-palabras-y-caracteres-el-comando-wc">🔢 Contar
+líneas, palabras y caracteres. El comando <code>wc</code></h2>
+<p>El comando <code>wc</code> procede de <em>word count</em> y permite
+contar distintos elementos de un archivo de texto.</p>
+<p>Su forma básica es:</p>
+<pre class="bash"><code>wc archivo</code></pre>
+<p>Por ejemplo:</p>
+<pre class="bash"><code>wc alumnado.txt</code></pre>
+<p>Podríamos obtener un resultado como este:</p>
+<pre class="text"><code>5 20 101 alumnado.txt</code></pre>
+<p>Los valores indican, en este orden:</p>
+<ol type="1">
+<li>Número de líneas.</li>
+<li>Número de palabras.</li>
+<li>Número de bytes.</li>
+<li>Nombre del archivo analizado.</li>
+</ol>
+<p>Si estamos empezando a trabajar con Bash, normalmente será más claro
+solicitar únicamente el dato que necesitamos mediante una opción
+concreta.</p>
+<h3 id="-contar-líneas-con-wc--l">📏 Contar líneas con
+<code>wc -l</code></h3>
+<p>La opción <code>-l</code> cuenta el número de líneas de un
+archivo.</p>
+<pre class="bash"><code>wc -l alumnado.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>5 alumnado.txt</code></pre>
+<p>Este comando puede ser útil, por ejemplo, para saber cuántos
+registros contiene un listado cuando cada persona ocupa una línea.</p>
+<p>⚠️ Si el archivo contiene una cabecera, esta también se contará como
+una línea.</p>
+<h3 id="-contar-palabras-con-wc--w">📝 Contar palabras con
+<code>wc -w</code></h3>
+<p>La opción <code>-w</code> cuenta el número de palabras.</p>
+<pre class="bash"><code>wc -w alumnado.txt</code></pre>
+<h3 id="-contar-caracteres-con-wc--m">🔤 Contar caracteres con
+<code>wc -m</code></h3>
+<p>La opción <code>-m</code> cuenta el número de caracteres del
+archivo.</p>
+<pre class="bash"><code>wc -m alumnado.txt</code></pre>
+<h3 id="-analizar-varios-archivos">📚 Analizar varios archivos</h3>
+<p>También podemos utilizar <code>wc</code> con varios archivos:</p>
+<pre class="bash"><code>wc -l grupo1.txt grupo2.txt</code></pre>
+<p>El comando mostrará el número de líneas de cada archivo y, al final,
+el total.</p>
+<pre class="text"><code>12 grupo1.txt
+15 grupo2.txt
+27 total</code></pre>
+<h2 id="-ordenar-líneas-el-comando-sort">🔤 Ordenar líneas. El comando
+<code>sort</code></h2>
+<p>El comando <code>sort</code> ordena las líneas de un archivo de
+texto. Por defecto, realiza una ordenación alfabética ascendente.</p>
+<p>Imaginemos que el archivo <code>materias.txt</code> contiene:</p>
+<pre class="text"><code>Música
+Biología
+Historia
+Arte
+Matemáticas</code></pre>
+<p>Si ejecutamos:</p>
+<pre class="bash"><code>sort materias.txt</code></pre>
+<p>Obtendremos:</p>
+<pre class="text"><code>Arte
+Biología
+Historia
+Matemáticas
+Música</code></pre>
+<p>⚠️ <code>sort</code> muestra el resultado ordenado en pantalla, pero
+<strong>no modifica el archivo original</strong>.</p>
+<h3 id="-ordenar-en-sentido-inverso-con-sort--r">🔽 Ordenar en sentido
+inverso con <code>sort -r</code></h3>
+<p>La opción <code>-r</code> (<em>reverse</em>) permite invertir la
+ordenación.</p>
+<pre class="bash"><code>sort -r materias.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>Música
+Matemáticas
+Historia
+Biología
+Arte</code></pre>
+<h3 id="-ordenar-números-con-sort--n">🔢 Ordenar números con
+<code>sort -n</code></h3>
+<p>Por defecto, <code>sort</code> interpreta el contenido como texto.
+Esto puede producir resultados inesperados cuando trabajamos con
+números.</p>
+<p>Por ejemplo, si el archivo <code>notas.txt</code> contiene:</p>
+<pre class="text"><code>10
+7
+2
+9</code></pre>
+<p>Al ejecutar:</p>
+<pre class="bash"><code>sort notas.txt</code></pre>
+<p>podríamos obtener:</p>
+<pre class="text"><code>10
+2
+7
+9</code></pre>
+<p>Esto ocurre porque se está realizando una ordenación alfabética: el
+número <code>10</code> comienza por <code>1</code> y aparece antes que
+los números que comienzan por <code>2</code>, <code>7</code> o
+<code>9</code>.</p>
+<p>Para ordenar numéricamente utilizamos la opción <code>-n</code>:</p>
+<pre class="bash"><code>sort -n notas.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>2
+7
+9
+10</code></pre>
+<h3 id="-ordenar-números-de-mayor-a-menor">🔢 Ordenar números de mayor a
+menor</h3>
+<p>Podemos combinar <code>-n</code> y <code>-r</code>:</p>
+<pre class="bash"><code>sort -nr notas.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>10
+9
+7
+2</code></pre>
+<h3 id="-ignorar-mayúsculas-y-minúsculas-con-sort--f">🔡 Ignorar
+mayúsculas y minúsculas con <code>sort -f</code></h3>
+<p>La opción <code>-f</code> permite ordenar sin distinguir entre
+mayúsculas y minúsculas.</p>
+<pre class="bash"><code>sort -f nombres.txt</code></pre>
+<p>Esta opción resulta útil cuando un listado contiene nombres escritos
+de manera poco homogénea.</p>
+<h2 id="-detectar-y-eliminar-líneas-repetidas-el-comando-uniq">🧹
+Detectar y eliminar líneas repetidas. El comando <code>uniq</code></h2>
+<p>El comando <code>uniq</code> permite comparar líneas consecutivas e
+identificar o eliminar las que están repetidas.</p>
+<p>Imaginemos un archivo llamado <code>grupos.txt</code> con este
+contenido:</p>
+<pre class="text"><code>1A
+1A
+1B
+2A
+2A
+2A</code></pre>
+<p>Al ejecutar:</p>
+<pre class="bash"><code>uniq grupos.txt</code></pre>
+<p>obtendremos:</p>
+<pre class="text"><code>1A
+1B
+2A</code></pre>
+<p>El resultado muestra una sola vez cada grupo de líneas repetidas
+consecutivas.</p>
+<h3 id="️-las-líneas-repetidas-deben-estar-juntas">⚠️ Las líneas
+repetidas deben estar juntas</h3>
+<p>Este aspecto es fundamental. <code>uniq</code> solo detecta
+repeticiones cuando las líneas iguales aparecen una detrás de la
+otra.</p>
+<p>Por ejemplo, si el archivo contiene:</p>
+<pre class="text"><code>1A
+2A
+1A
+1B</code></pre>
+<p>El comando:</p>
+<pre class="bash"><code>uniq grupos.txt</code></pre>
+<p>mostrará las cuatro líneas, porque los dos valores <code>1A</code> no
+son consecutivos.</p>
+<p>Por este motivo, antes de utilizar <code>uniq</code> suele ser
+necesario ordenar el contenido con <code>sort</code>.</p>
+<p>En este módulo realizaremos ambos pasos por separado para comprender
+claramente qué hace cada comando:</p>
+<pre class="bash"><code># 1. Mostrar el listado ordenado
+sort grupos.txt</code></pre>
+<p>Una vez que dispongamos de una copia ordenada del archivo, podremos
+analizarla con:</p>
+<pre class="bash"><code># 2. Eliminar las repeticiones consecutivas
+uniq grupos_ordenados.txt</code></pre>
+<p>En el módulo siguiente aprenderemos a conectar directamente ambos
+comandos mediante una tubería, evitando el archivo intermedio.</p>
+<h3 id="-contar-las-repeticiones-con-uniq--c">🔢 Contar las repeticiones
+con <code>uniq -c</code></h3>
+<p>La opción <code>-c</code> añade delante de cada línea el número de
+veces que aparece consecutivamente.</p>
+<pre class="bash"><code>uniq -c grupos_ordenados.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>      2 1A
+      1 1B
+      3 2A</code></pre>
+<h3 id="️-mostrar-únicamente-las-líneas-repetidas-con-uniq--d">♻️
+Mostrar únicamente las líneas repetidas con <code>uniq -d</code></h3>
+<p>La opción <code>-d</code> (<em>duplicate</em>) muestra solo las
+líneas que aparecen repetidas.</p>
+<pre class="bash"><code>uniq -d grupos_ordenados.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>1A
+2A</code></pre>
+<h3 id="1️⃣-mostrar-únicamente-las-líneas-no-repetidas-con-uniq--u">1️⃣
+Mostrar únicamente las líneas no repetidas con <code>uniq -u</code></h3>
+<p>La opción <code>-u</code> muestra las líneas que aparecen una sola
+vez.</p>
+<pre class="bash"><code>uniq -u grupos_ordenados.txt</code></pre>
+<p>En el ejemplo anterior, el resultado sería:</p>
+<pre class="text"><code>1B</code></pre>
+<h2 id="-ejemplo-consultar-un-listado-de-alumnado">💡 Ejemplo: Consultar
+un listado de alumnado</h2>
+<p>Imaginemos que disponemos de un archivo llamado
+<code>alumnado.txt</code>:</p>
+<pre class="text"><code>Ana García - 1A
+Carlos López - 1B
+Marta Sánchez - 1A
+Pablo Torres - 2A
+Laura García - 1B</code></pre>
+<p>Podemos realizar las siguientes consultas:</p>
+<pre class="bash"><code># Buscar el alumnado del grupo 1A
+grep &quot;1A&quot; alumnado.txt
+
+# Mostrar el número de línea de las personas apellidadas García
+grep -n &quot;García&quot; alumnado.txt
+
+# Contar cuántas líneas contiene el archivo
+wc -l alumnado.txt
+
+# Ordenar alfabéticamente el listado
+sort alumnado.txt
+
+# Mostrar el listado en orden alfabético inverso
+sort -r alumnado.txt</code></pre>
+<h2 id="-ejemplo-analizar-un-registro-de-incidencias">💡 Ejemplo:
+Analizar un registro de incidencias</h2>
+<p>Supongamos que el archivo <code>incidencias.txt</code> contiene:</p>
+<pre class="text"><code>INFO Inicio de sesión correcto
+AVISO Contraseña próxima a caducar
+ERROR No se puede conectar con el servidor
+INFO Archivo guardado correctamente
+ERROR No se puede abrir el documento</code></pre>
+<p>Podríamos analizarlo así:</p>
+<pre class="bash"><code># Mostrar las líneas que contienen errores
+grep &quot;ERROR&quot; incidencias.txt
+
+# Mostrar los errores junto con su número de línea
+grep -n &quot;ERROR&quot; incidencias.txt
+
+# Contar cuántas líneas contienen errores
+grep -c &quot;ERROR&quot; incidencias.txt
+
+# Mostrar las líneas que no contienen errores
+grep -v &quot;ERROR&quot; incidencias.txt
+
+# Contar el número total de líneas del registro
+wc -l incidencias.txt</code></pre>
+<h2 id="-ejemplo-revisar-una-lista-de-respuestas">💡 Ejemplo: Revisar
+una lista de respuestas</h2>
+<p>Imaginemos que hemos recogido en el archivo
+<code>respuestas.txt</code> una opción por línea:</p>
+<pre class="text"><code>Moodle
+Classroom
+Moodle
+Teams
+Moodle
+Classroom</code></pre>
+<p>En primer lugar, podemos mostrar las respuestas ordenadas:</p>
+<pre class="bash"><code>sort respuestas.txt</code></pre>
+<p>El resultado sería:</p>
+<pre class="text"><code>Classroom
+Classroom
+Moodle
+Moodle
+Moodle
+Teams</code></pre>
+<p>Si guardamos previamente este resultado en un archivo llamado
+<code>respuestas_ordenadas.txt</code>, podremos contar las
+repeticiones:</p>
+<pre class="bash"><code>uniq -c respuestas_ordenadas.txt</code></pre>
+<p>Resultado:</p>
+<pre class="text"><code>      2 Classroom
+      3 Moodle
+      1 Teams</code></pre>
+<p>De esta manera podemos obtener un resumen básico de las respuestas
+sin necesidad de abrir una hoja de cálculo.</p>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>grep "texto" archivo</code></td>
+<td style="text-align: left;">Muestra las líneas que contienen un
+texto</td>
+<td
+style="text-align: left;"><code>grep "ERROR" registro.log</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>grep -i</code></td>
+<td style="text-align: left;">Ignora mayúsculas y minúsculas</td>
+<td
+style="text-align: left;"><code>grep -i "moodle" respuestas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep -n</code></td>
+<td style="text-align: left;">Muestra el número de línea</td>
+<td
+style="text-align: left;"><code>grep -n "Pendiente" tareas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>grep -v</code></td>
+<td style="text-align: left;">Muestra las líneas que no coinciden</td>
+<td
+style="text-align: left;"><code>grep -v "Completado" tareas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep -c</code></td>
+<td style="text-align: left;">Cuenta las líneas que contienen
+coincidencias</td>
+<td
+style="text-align: left;"><code>grep -c "ERROR" registro.log</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>grep -w</code></td>
+<td style="text-align: left;">Busca una palabra completa</td>
+<td
+style="text-align: left;"><code>grep -w "arte" materias.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>wc</code></td>
+<td style="text-align: left;">Cuenta líneas, palabras y bytes</td>
+<td style="text-align: left;"><code>wc archivo.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>wc -l</code></td>
+<td style="text-align: left;">Cuenta líneas</td>
+<td style="text-align: left;"><code>wc -l alumnado.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>wc -w</code></td>
+<td style="text-align: left;">Cuenta palabras</td>
+<td style="text-align: left;"><code>wc -w informe.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>wc -m</code></td>
+<td style="text-align: left;">Cuenta caracteres</td>
+<td style="text-align: left;"><code>wc -m informe.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort</code></td>
+<td style="text-align: left;">Ordena las líneas alfabéticamente</td>
+<td style="text-align: left;"><code>sort nombres.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sort -r</code></td>
+<td style="text-align: left;">Ordena en sentido inverso</td>
+<td style="text-align: left;"><code>sort -r nombres.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort -n</code></td>
+<td style="text-align: left;">Ordena valores numéricamente</td>
+<td style="text-align: left;"><code>sort -n notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sort -nr</code></td>
+<td style="text-align: left;">Ordena números de mayor a menor</td>
+<td style="text-align: left;"><code>sort -nr notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort -f</code></td>
+<td style="text-align: left;">Ordena ignorando mayúsculas y
+minúsculas</td>
+<td style="text-align: left;"><code>sort -f nombres.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uniq</code></td>
+<td style="text-align: left;">Elimina líneas repetidas consecutivas de
+la salida</td>
+<td
+style="text-align: left;"><code>uniq grupos_ordenados.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uniq -c</code></td>
+<td style="text-align: left;">Cuenta repeticiones consecutivas</td>
+<td
+style="text-align: left;"><code>uniq -c grupos_ordenados.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uniq -d</code></td>
+<td style="text-align: left;">Muestra únicamente las líneas
+repetidas</td>
+<td
+style="text-align: left;"><code>uniq -d grupos_ordenados.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uniq -u</code></td>
+<td style="text-align: left;">Muestra únicamente las líneas no
+repetidas</td>
+<td
+style="text-align: left;"><code>uniq -u grupos_ordenados.txt</code></td>
+</tr>
+</tbody>
+</table>

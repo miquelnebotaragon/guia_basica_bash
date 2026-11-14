@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guía visual de iniciación a la consola de comandos de Linux para docentes.">
+  <meta name="theme-color" content="#101827">
+  <title>Guía Linux para docentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span><b>guia</b><em>linux</em><small>para docentes</small></span>
+      </a>
+      <div class="top-actions">
+        <label class="search-box" for="module-search">
+          <span aria-hidden="true">⌕</span>
+          <input id="module-search" type="search" placeholder="Buscar un módulo..." autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="Cambiar tema">☼</button>
+        <a class="github-link" href="#referencia">Recursos <span>↗</span></a>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navegación del curso">
+        <div class="sidebar-intro">
+          <span class="eyebrow">Ruta de aprendizaje</span>
+          <p>De la primera orden a tu propio script.</p>
+        </div>
+        <nav id="module-nav"></nav>
+        <a class="reference-card" href="#referencia">
+          <span class="reference-icon">⌘</span>
+          <span><strong>Hoja de referencia</strong><small>Todos los comandos en una página</small></span>
+          <span class="arrow">→</span>
+        </a>
+      </aside>
+
+      <main id="app" tabindex="-1">
+        <section class="hero" id="inicio">
+          <div class="hero-copy">
+            <div class="status-line"><span class="pulse"></span> Curso abierto · 12 módulos</div>
+            <h1>Linux se entiende<br><span>línea a línea.</span></h1>
+            <p class="hero-lead">Una guía práctica para perderle el miedo a la consola, orientarse por el sistema y empezar a automatizar tareas.</p>
+            <div class="hero-actions">
+              <a class="primary-button" href="#modulo-01">Empezar el recorrido <span>→</span></a>
+              <a class="text-button" href="#referencia">Ver la chuleta <span>↗</span></a>
+            </div>
+            <div class="hero-meta"><span>⌁</span> Pensada para profesorado no iniciado <span class="dot-separator">·</span> <span>12</span> módulos progresivos</div>
+          </div>
+          <div class="hero-terminal" aria-label="Ejemplo de terminal">
+            <div class="terminal-bar"><span class="terminal-dots"><i></i><i></i><i></i></span><span>bash — guia_linux</span><span class="terminal-lock">⌁</span></div>
+            <div class="terminal-body">
+              <div class="terminal-line dim"># empieza por saber dónde estás</div>
+              <div class="terminal-line"><b class="prompt">profesor@linux</b><span class="path">:~$</span> pwd</div>
+              <div class="terminal-output">/home/profesor</div>
+              <div class="terminal-line"><b class="prompt">profesor@linux</b><span class="path">:~$</span> ls</div>
+              <div class="terminal-output folders">Documentos&nbsp;&nbsp; Descargas&nbsp;&nbsp; Escritorio</div>
+              <div class="terminal-line cursor-line"><b class="prompt">profesor@linux</b><span class="path">:~$</span> <span class="cursor"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="quick-start" aria-label="Puntos de partida">
+          <div class="section-label">Antes de empezar</div>
+          <div class="quick-grid">
+            <a href="#modulo-01"><span class="quick-number">01</span><span><b>Entiende el terreno</b><small>Consola, terminal, shell y Bash</small></span><span class="arrow">↗</span></a>
+            <a href="#modulo-02"><span class="quick-number">02</span><span><b>Encuentra tu lugar</b><small>Rutas, directorios y archivos</small></span><span class="arrow">↗</span></a>
+            <a href="#modulo-04"><span class="quick-number">03</span><span><b>Hazlo realidad</b><small>Crea, mueve y organiza</small></span><span class="arrow">↗</span></a>
+          </div>
+        </section>
+
+        <section class="module-section" id="lecciones">
+          <div class="section-heading"><div><span class="eyebrow">El recorrido</span><h2>Doce paradas para<br><em>pensar en comandos.</em></h2></div><p>Avanza a tu ritmo. Cada módulo añade una herramienta nueva y la conecta con lo que ya sabes.</p></div>
+          <div id="module-grid" class="module-grid"></div>
+        </section>
+
+        <section class="infographic-banner">
+          <div><span class="eyebrow">Mapa visual</span><h2>Terminal, shell,<br><em>Bash.</em> Sin líos.</h2><p>Una infografía para recordar cómo encajan las piezas.</p><a href="assets/terminal_shell_bash.png" target="_blank" class="text-button">Abrir infografía <span>↗</span></a></div>
+          <a class="infographic-image" href="assets/terminal_shell_bash.png" target="_blank"><img src="assets/terminal_shell_bash.png" alt="Infografía Terminal vs Shell vs Bash"></a>
+        </section>
+
+        <section class="reference-section" id="referencia">
+          <div class="section-heading"><div><span class="eyebrow">Para tener a mano</span><h2>La hoja de<br><em>referencia.</em></h2></div><p>Todos los comandos y atajos vistos en los 12 módulos, reunidos en una sola página.</p></div>
+          <article id="reference-content" class="markdown-content"></article>
+        </section>
+      </main>
+    </div>
+    <footer><span>guia<span class="footer-accent">linux</span> / para docentes</span><span>Aprender haciendo, una orden cada vez.</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

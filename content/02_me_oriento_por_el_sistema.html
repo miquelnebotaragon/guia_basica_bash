@@ -1,0 +1,289 @@
+<h1 id="la-consola-de-comandos-parte-ii">La consola de comandos. Parte
+II</h1>
+<h2 id="-ubicación-y-orientación-directorios-y-archivos">❓ Ubicación y
+orientación. Directorios y archivos</h2>
+<p>Tal como hemos visto en la lección anterior, cuando iniciamos sesión,
+por ejemplo, en un sistema operativo Linux sin entorno gráfico,
+accedemos a una TTY "real" que nos permite interactuar con el sistema.
+La duda que primero nos puede aparecer es saber en qué directorio me
+encuentro. ¿Estoy en "Mis documentos"? ¿En la raíz de la carpeta del
+usuario? ¿En "Descargas"? Si creo un archivo, ¿en qué carpeta o
+directorio se guardará? En Linux, todo se organiza en forma de
+<strong>directorios</strong> y <strong>archivos</strong>, de manera
+similar a carpetas y documentos en otros sistemas operativos.</p>
+<h2 id="-qué-es-un-directorio">📁 ¿Qué es un directorio?</h2>
+<p>Un directorio es un <strong>contenedor</strong> que puede
+almacenar:</p>
+<ul>
+<li>Archivos (documentos, imágenes, música, vídeos, programas…)</li>
+<li>Otros directorios (subdirectorios)</li>
+</ul>
+<p>A modo de ejemplo, podemos imaginar el sistema de archivos como un
+árbol:</p>
+<p>La raíz del árbol comienza en "/" que es el directorio raíz y a
+partir de él cuelgan todos los otros directorios:</p>
+<pre class="bash"><code>/home/usuario/Escritorio</code></pre>
+<h2 id="-dónde-estoy-el-comando-pwd">📍 ¿Dónde estoy? El comando
+<code>pwd</code></h2>
+<p>Para saber en qué directorio nos encontramos actualmente, utilizamos
+el comando <code>pwd</code>.</p>
+<p>🔹 <em>pwd</em> significa <em>Print Working Directory</em> (imprimir
+directorio de trabajo actual).</p>
+<p>Al ejecutarlo, la consola mostrará una ruta completa, por
+ejemplo:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p><img src="/assets/pwd.png" alt="PWD" /></p>
+<p>En el ejemplo anterior vemos como el comando nos indica que nos
+encontramos dentro del directorio "/home", el cual, a su vez, contiene
+el directorio particular del usuario.</p>
+<h2 id="️-qué-es-una-ruta">🛣️ ¿Qué es una ruta?</h2>
+<p>Una ruta es la dirección que indica dónde se encuentra un archivo o
+directorio dentro del sistema.</p>
+<ul>
+<li><strong>Ruta absoluta</strong>: es la ruta completa desde el
+directorio raíz "/". Por ejemplo, continuando con el ejemplo anterior,
+una foto de nombre "foto1.jpeg" que estuviera en el directorio
+"Imágenes" tendría por ruta completa:</li>
+</ul>
+<pre class="bash"><code>/home/usuario/Imágenes/foto1.jpeg</code></pre>
+<p>⚠️ Cualquier ruta absoluta comienza siempre por <code>/</code>.</p>
+<ul>
+<li><strong>Ruta relativa</strong>: es una ruta que parte del directorio
+en el que nos encontramos actualmente.</li>
+</ul>
+<p>Si ya nos encontramos en la carpeta del usuario, por ejemplo en
+"/home/usuario", podemos acceder haciendo uso del comando
+<code>cd</code> (<em>change directory</em>) a "Documentos" simplemente
+escribiendo:</p>
+<pre class="bash"><code>cd Documentos</code></pre>
+<h2 id="-diferencia-entre--y-">🏠 Diferencia entre <code>/</code> y
+<code>~</code></h2>
+<ul>
+<li><code>/</code> Hace referencia al <strong>directorio raíz en nuestro
+sistema operativo</strong>. Es el inicio de todo el sistema de archivos
+donde todos los subdirectorios cuelgan de él. ⚠️ No es el directorio
+personal de ningún usuario. Por ejemplo, en el directorio raíz podríamos
+encontrar una organización similar a la siguiente:</li>
+</ul>
+<pre class="text"><code>/
+├── home
+├── etc
+├── bin
+└── var</code></pre>
+<ul>
+<li><code>~</code> Hace referencia al <strong>directorio personal del
+usuario</strong>. Es un atajo al directorio <em>home</em> del usuario
+actual. Hay que tener en cuenta que este cambia según el usuario que
+haya iniciado la sesión. Por ejemplo, el directorio personal en un
+equipo Linux actual puede tener una organización similar a la
+siguiente:</li>
+</ul>
+<pre class="text"><code>~
+├── Descargas
+├── Documentos
+├── Escritorio
+├── Imágenes
+├── Música
+├── Plantillas
+├── Público
+├── Vídeos</code></pre>
+<h2 id="-qué-hay-aquí-el-comando-ls">📂 ¿Qué hay aquí? El comando
+<code>ls</code></h2>
+<p>Para listar el contenido de un directorio usamos <code>ls</code> con
+sus opciones y argumentos (si es necesario):</p>
+<pre class="bash"><code>ls</code></pre>
+<p>Esto mostrará los archivos y subdirectorios del directorio
+actual.</p>
+<h3 id="opciones-comunes-del-comando-ls">Opciones comunes del comando
+<code>ls</code></h3>
+<ol type="1">
+<li><code>ls -l</code> (opción <em>long</em>) muestra:
+<ol type="1">
+<li>Permisos</li>
+<li>Número de enlaces (<em>hard links</em>)</li>
+<li>Propietario</li>
+<li>Grupo</li>
+<li>Tamaño</li>
+<li>Fecha de modificación</li>
+</ol></li>
+</ol>
+<p><img src="/assets/ls_l_ejemplo.png"
+alt="Ejemplo listado directorio personal" /></p>
+<pre class="text"><code>drwxr-xr-x  2  mnebot  mnebot  12288  jul 23 21:28  Descargas
+││────────│ │    │        │       │        │            │
+││        │ │    │        │       │        │            └── Nombre
+││        │ │    │        │       │        └──────────── Fecha modificación
+││        │ │    │        │       └───────────────────── Tamaño
+││        │ │    │        └───────────────────────────── Grupo
+││        │ │    └────────────────────────────────────── Propietario
+││        │ └─────────────────────────────────────────── Nº de enlaces
+│└────────┴───────────────────────────────────────────── Permisos
+└─────────────────────────────────────────────────────── Tipo (d = directorio)</code></pre>
+<ol start="2" type="1">
+<li><code>ls -lh</code> combina la opción <em>long</em>
+(<code>-l</code>) con la opción <code>-h</code>
+(<em>human-readable</em>). De esta forma, muestra el listado detallado
+utilizando tamaños fáciles de leer para las personas, expresados en KB,
+MB, GB...</li>
+</ol>
+<h2 id="-permisos-básicos-de-archivos-y-directorios">🔐 Permisos básicos
+de archivos y directorios</h2>
+<p>Cada archivo y directorio tiene permisos que indican quién puede
+hacer qué con ellos.</p>
+<p>Al ejecutar <code>ls -l</code> veremos algo parecido a:</p>
+<pre class="bash"><code>drwxr-xr-- 2 usuario usuario 4096 jun 10  Documentos</code></pre>
+<p>🔍 Interpretación básica de permisos de un archivo o directorio:</p>
+<ul>
+<li>El primer carácter indica el tipo:
+<ul>
+<li>d → directorio</li>
+<li>- → archivo</li>
+</ul></li>
+</ul>
+<p><img src="/assets/directorio_vs_archivo.png"
+alt="Directorio vs Archivo" /></p>
+<ul>
+<li><p>A continuación aparecen tres bloques de permisos separados
+mediante un guion:</p>
+<ul>
+<li>El primer bloque hace referencia a qué puede hacer el
+<strong>Usuario</strong> (propietario)</li>
+<li>El segundo bloque hace referencia a qué puede hacer el
+<strong>Grupo</strong></li>
+<li>El tercer bloque hace referencia a qué pueden hacer <strong>Otros
+usuarios</strong> con acceso al archivo o directorio</li>
+</ul></li>
+<li><p>Cada bloque puede contener las siguientes letras que representan
+una función específica:</p>
+<ul>
+<li>r → lectura (<em>read</em>)</li>
+<li>w → escritura (<em>write</em>)</li>
+<li>x → ejecución (<em>execute</em>). En el caso de los directorios,
+permite acceder y entrar en ellos.</li>
+</ul></li>
+</ul>
+<h2 id="-ejemplo-analizar-permisos-de-un-archivo">💡 Ejemplo: Analizar
+permisos de un archivo</h2>
+<p>Acabo de crear un archivo con extensión <strong>.txt</strong> en el
+<strong>Escritorio</strong> de mi usuario. Haciendo un
+<code>ls -l</code> recibo la siguiente información a través de la
+shell:</p>
+<pre class="bash"><code>-rw-r--r-- 1 mnebot mnebot    11 jul 24 16:47  prueba.txt</code></pre>
+<ul>
+<li>- → Indica que se trata de un archivo, no de un directorio.</li>
+<li>El primer bloque de permisos <code>rw-</code> indica que:
+<ul>
+<li>El propietario puede leerlo y modificarlo pero no ejecutarlo (por
+ejemplo, si fuese un script, no se podría ejecutar hasta concederle
+permisos de ejecución).</li>
+</ul></li>
+<li>El segundo bloque de permisos <code>r--</code> indica que:
+<ul>
+<li>Los usuarios que pertenecen al grupo <code>mnebot</code> solo tienen
+permisos de lectura sobre el archivo.</li>
+</ul></li>
+<li>El tercer bloque de permisos <code>r--</code> indica que:
+<ul>
+<li>El resto de usuarios del sistema pueden leer el archivo, pero no
+modificarlo ni ejecutarlo (en caso de ser un script o un programa).</li>
+</ul></li>
+</ul>
+<h2 id="-ejemplo-analizar-permisos-de-un-directorio">💡 Ejemplo:
+Analizar permisos de un directorio</h2>
+<p>Veamos un segundo ejemplo práctico. Creamos un directorio de nombre
+<strong>prueba</strong> en el <strong>Escritorio</strong> de nuestro
+usuario. Haciendo un <code>ls -l</code> recibimos la siguiente
+información:</p>
+<pre class="bash"><code>drwxr-xr-x 2 mnebot mnebot 4096 jul 24 16:47  pruebas</code></pre>
+<ul>
+<li><code>d</code> → Indica que se trata de un directorio (no de un
+archivo regular).</li>
+<li>El primer bloque de permisos <code>rwx</code> indica que:
+<ul>
+<li>El usuario propietario puede listar el contenido del directorio
+(<em>read</em>), crear o eliminar archivos dentro de él (<em>write</em>)
+y acceder al directorio (<em>execute</em>).</li>
+</ul></li>
+<li>El segundo bloque de permisos <code>r-x</code> indica que:
+<ul>
+<li>Los usuarios que pertenecen al grupo <code>mnebot</code> pueden
+listar el contenido del directorio y acceder a él, pero no pueden crear,
+modificar ni eliminar archivos dentro del mismo.</li>
+</ul></li>
+<li>El tercer bloque de permisos <code>r-x</code> indica que:
+<ul>
+<li>El resto de usuarios del sistema pueden listar el contenido del
+directorio y acceder a él, pero no pueden crear, modificar ni eliminar
+archivos dentro del mismo.</li>
+</ul></li>
+</ul>
+<h3 id="-interpretación-de-permisos-en-archivos-vs-directorios">🔎
+Interpretación de permisos en archivos vs directorios</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Permiso</th>
+<th style="text-align: left;">Archivo</th>
+<th style="text-align: left;">Directorio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">r</td>
+<td style="text-align: left;">Ver contenido</td>
+<td style="text-align: left;">Listar archivos (<code>ls</code>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">w</td>
+<td style="text-align: left;">Modificar archivo</td>
+<td style="text-align: left;">Crear/eliminar archivos dentro</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">Ejecutar programa</td>
+<td style="text-align: left;">Entrar al directorio
+(<code>cd</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pwd</code></td>
+<td style="text-align: left;">Muestra la ruta completa del directorio
+actual en el que nos encontramos</td>
+<td style="text-align: left;"><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd</code></td>
+<td style="text-align: left;">Cambia al directorio indicado</td>
+<td style="text-align: left;"><code>cd Documentos</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ls</code></td>
+<td style="text-align: left;">Lista el contenido de un directorio</td>
+<td style="text-align: left;"><code>ls</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ls -l</code></td>
+<td style="text-align: left;">Muestra información detallada del
+contenido de un directorio (permisos, propietario, tamaño,
+fecha...)</td>
+<td style="text-align: left;"><code>ls -l</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ls -lh</code></td>
+<td style="text-align: left;">Muestra el listado detallado utilizando
+tamaños más fáciles de leer</td>
+<td style="text-align: left;"><code>ls -lh</code></td>
+</tr>
+</tbody>
+</table>

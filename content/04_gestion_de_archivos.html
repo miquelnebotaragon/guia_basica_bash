@@ -1,0 +1,286 @@
+<h1 id="la-consola-de-comandos-parte-iv">La consola de comandos. Parte
+IV</h1>
+<h2 id="️-crear-y-administrar-archivos-y-directorios">⛏️ Crear y
+administrar archivos y directorios</h2>
+<p>En módulos anteriores hemos aprendido a orientarnos dentro del
+sistema de archivos y a movernos entre directorios. En consecuencia,
+estamos en disposición de saber contestar a preguntas como:</p>
+<ul>
+<li>¿Dónde estoy? → <code>pwd</code> (<em>print working
+directory</em>)</li>
+<li>¿Qué hay aquí? → <code>ls</code> (<em>list</em>)</li>
+<li>¿Cómo me muevo? → <code>cd</code> (<em>change directory</em>)</li>
+</ul>
+<p>Llega entonces el momento de aprender a <strong>crear, copiar, mover
+y eliminar</strong> archivos y directorios. Estas son algunas de las
+operaciones básicas que realizaremos frecuentemente al trabajar en
+entornos Linux y otros sistemas de tipo Unix.</p>
+<h2 id="️-crear-archivos-el-comando-touch">✏️ Crear archivos. El comando
+<code>touch</code></h2>
+<p>El comando <code>touch</code> permite crear archivos vacíos de forma
+rápida y sencilla.</p>
+<pre class="bash"><code># Crear un archivo vacío en el directorio actual
+touch prueba.txt</code></pre>
+<pre class="bash"><code># Crear un archivo en una ruta concreta
+touch /home/usuario/Escritorio/prueba.txt</code></pre>
+<p>⚠️ Si el archivo ya existe, <code>touch</code> actualizará su fecha
+de modificación sin cambiar su contenido.</p>
+<h2 id="-crear-directorios-el-comando-mkdir">📁 Crear directorios. El
+comando <code>mkdir</code></h2>
+<p>El comando <code>mkdir</code> (del inglés, <em>make directories</em>)
+permite crear nuevos directorios.</p>
+<pre class="bash"><code># Crear un directorio en la ubicación actual
+mkdir MisCosas</code></pre>
+<pre class="bash"><code># Crear un directorio en una ruta concreta
+mkdir /home/usuario/Documentos/test</code></pre>
+<p>⚠️ Los sistemas <strong>Linux y otros de tipo Unix</strong> son
+<strong>sensibles al uso de mayúsculas y minúsculas</strong> (en inglés,
+<em>case sensitive</em>). Esto significa que el sistema distingue entre
+letras mayúsculas y minúsculas al interpretar los nombres de archivos y
+directorios. Por ejemplo, <code>MisCosas</code>, <code>miscosas</code> y
+<code>MISCOSAS</code> se consideran <strong>tres nombres
+diferentes</strong>. Por este motivo, es importante escribir siempre los
+nombres exactamente igual a como fueron creados.</p>
+<p>⚠️ Uso del <strong>tabulador</strong>. En <strong>Bash</strong>,
+cuando empezamos a escribir el nombre de un archivo o directorio,
+podemos pulsar la tecla <em>Tab</em> de nuestro teclado para aprovechar
+el autocompletado. Si en el directorio actual existe algún archivo o
+directorio cuyo nombre comienza por los caracteres que ya hemos escrito,
+Bash completará automáticamente el resto del nombre. Si hay varias
+coincidencias, al pulsar <em>Tab</em> dos veces se mostrarán en pantalla
+todas las opciones disponibles para que podamos elegir la que nos
+interesa.</p>
+<h3 id="crear-varios-directorios-a-la-vez">Crear varios directorios a la
+vez</h3>
+<p>Podemos crear múltiples directorios en una sola instrucción:</p>
+<pre class="bash"><code># Crear varios directorios en el directorio actual
+mkdir clase01 clase02 clase03</code></pre>
+<p><img src="/assets/mkdir_varios_directorios.png"
+alt="Crear varios directorios" /></p>
+<h3 id="crear-directorios-anidados-con--p">Crear directorios anidados
+con <code>-p</code></h3>
+<p>En ocasiones necesitaremos crear una estructura completa de
+directorios, donde unos estén contenidos dentro de otros.</p>
+<p>Por ejemplo, imaginemos que queremos crear la siguiente
+estructura:</p>
+<pre class="text"><code>curso
+└── linux
+    └── bash
+        └── 2026</code></pre>
+<p>Podríamos hacerlo creando cada directorio uno a uno:</p>
+<pre class="bash"><code>mkdir curso
+mkdir curso/linux
+mkdir curso/linux/bash
+mkdir curso/linux/bash/2026</code></pre>
+<p>Sin embargo, Bash permite realizar todo el proceso con un único
+comando utilizando la opción <code>-p</code> (<em>parents</em>):</p>
+<pre class="bash"><code>mkdir -p curso/linux/bash/2026</code></pre>
+<p>Con la opción <code>-p</code> creamos todos los directorios que
+faltan en la ruta indicada. Si alguno de los directorios intermedios ya
+existe, no produce ningún error y continúa con la creación del
+resto.</p>
+<p>Por ejemplo, si únicamente existe el directorio <code>curso</code>,
+el comando anterior creará automáticamente <code>linux</code>,
+<code>bash</code> y <code>2026</code>.</p>
+<p>⚠️ Sin la opción <code>-p</code>, <code>mkdir</code> solo crea el
+último directorio de la ruta. Si alguno de los directorios anteriores no
+existe, el comando finalizará mostrando un mensaje de error.</p>
+<h2 id="-copiar-archivos-y-directorios-el-comando-cp">📋 Copiar archivos
+y directorios. El comando <code>cp</code></h2>
+<p>El comando <code>cp</code> (<em>copy</em>) permite duplicar archivos
+o directorios.</p>
+<h3 id="-ejemplo-copiar-un-archivo-concreto-al-directorio-actual">💡
+Ejemplo: Copiar un archivo concreto al directorio actual</h3>
+<p>Si nos fijamos en el ejemplo siguiente, podemos ver que el comando
+<code>cp</code> presenta dos argumentos:</p>
+<ol type="1">
+<li>El primero hace referencia a la ruta absoluta del archivo a
+copiar.</li>
+<li>El segundo, el <code>.</code> (punto), hace referencia a la
+ubicación (directorio) actual.</li>
+</ol>
+<pre class="bash"><code># Copiar un archivo al directorio actual
+cp /home/usuario/Descargas/informe.pdf .</code></pre>
+<h3
+id="-ejemplo-copiar-un-archivo-del-directorio-actual-a-otro-directorio">💡
+Ejemplo: Copiar un archivo del directorio actual a otro directorio</h3>
+<pre class="bash"><code># Copiar un archivo a otro directorio
+cp nota.txt /home/usuario/Documentos/</code></pre>
+<h3 id="-ejemplo-copiar-un-archivo-con-nuevo-nombre">💡 Ejemplo: Copiar
+un archivo con nuevo nombre</h3>
+<p>Será tan sencillo como añadir un nuevo nombre a la ruta de
+destino.</p>
+<pre class="bash"><code># Copiar un archivo y renombrarlo en el destino
+cp nota.txt /home/usuario/Documentos/prueba.txt</code></pre>
+<h3 id="copiar-directorios-con--r">Copiar directorios con
+<code>-r</code></h3>
+<p>Para copiar directorios debemos usar la opción <code>-r</code>
+(<em>recursive</em>), que copia el directorio y todo su contenido.</p>
+<pre class="bash"><code># Copiar un directorio y todo su contenido
+cp -r MisClases /home/usuario/Documentos/</code></pre>
+<h2 id="-mover-y-renombrar-archivos-el-comando-mv">🚚 Mover y renombrar
+archivos. El comando <code>mv</code></h2>
+<p>El comando <code>mv</code> (<em>move</em>) nos permite mover archivos
+y directorios de una ubicación a otra. También se utiliza para
+renombrar.</p>
+<pre class="bash"><code># Mover un archivo a otro directorio
+mv nota.txt /home/usuario/Documentos/</code></pre>
+<pre class="bash"><code># Renombrar un archivo (&quot;mover&quot; con un nuevo nombre)
+mv nota.txt apuntes.txt</code></pre>
+<h3 id="mover-y-renombrar-un-directorio">Mover y renombrar un
+directorio</h3>
+<pre class="bash"><code># Mover un directorio a otra ubicación
+mv MisClases /home/usuario/Documentos/</code></pre>
+<pre class="bash"><code># Renombrar un directorio
+mv MisClases ClasePractica</code></pre>
+<p>⚠️ A diferencia de <code>cp</code>, el comando <code>mv</code>
+<strong>no conserva el original</strong>. El archivo o directorio
+desaparece de la ubicación original y aparece en la nueva.</p>
+<h2 id="️-eliminar-archivos-el-comando-rm">🗑️ Eliminar archivos. El
+comando <code>rm</code></h2>
+<p>El comando <code>rm</code> (<em>remove</em>) <strong>elimina
+archivos</strong>.</p>
+<pre class="bash"><code># Eliminar un archivo
+rm nota.txt</code></pre>
+<p>La opción <code>-i</code> (<em>interactive</em>) nos pedirá
+confirmación antes de eliminar, lo cual es muy recomendable para evitar
+borrados accidentales.</p>
+<pre class="bash"><code># Eliminar un archivo solicitando confirmación
+rm -i nota.txt</code></pre>
+<p><img src="/assets/rm_interactivo.png"
+alt="Borrar con confirmación" /></p>
+<h3 id="eliminar-directorios-con--r">Eliminar directorios con
+<code>-r</code></h3>
+<p>Para <strong>eliminar directorios que tengan contenido</strong>,
+debemos usar la opción <code>-r</code> (<em>recursive</em>):</p>
+<pre class="bash"><code># Eliminar un directorio y todo su contenido
+rm -r MisClases</code></pre>
+<p>⚠️ <strong>Muy importante.</strong> El comando <code>rm</code> no
+envía los archivos a la papelera. <strong>La eliminación es
+permanente</strong>. No hay forma de recuperarlos una vez
+eliminados.</p>
+<h3 id="eliminar-sin-errores-ni-confirmación-con--f">Eliminar sin
+errores ni confirmación con <code>-f</code></h3>
+<p>La opción <code>-f</code> (<em>force</em>) fuerza la eliminación. Con
+ella, <code>rm</code> no pedirá confirmación y tampoco mostrará mensajes
+de error si el archivo no existe. Debe usarse con precaución.</p>
+<pre class="bash"><code># Eliminar sin preguntar (usar con precaución)
+rm -f nota.txt</code></pre>
+<p>❗ La combinación <code>-rf</code> es especialmente peligrosa si se
+usa sin cuidado. En el ejemplo siguiente borrará el directorio
+<code>Documentos</code> al completo sin pedir confirmación y el
+contenido será irrecuperable.</p>
+<pre class="bash"><code># NO ejecutar si no se está completamente seguro/a
+rm -rf /home/usuario/Documentos</code></pre>
+<p>Al tiempo que peligroso, el comando <code>rm -rf</code> es
+extremadamente útil si queremos, por ejemplo, <strong>borrar por
+completo el contenido de una carpeta</strong>. Imaginemos que deseamos
+vaciar la carpeta de Descargas de nuestro usuario. Será tan sencillo
+como escribir un asterisco <code>*</code> después de la ruta del
+directorio. Dicho símbolo indica que <strong>todo</strong> lo que hay en
+su interior, será eliminado sin confirmación (el directorio no se borra,
+mantendremos la carpeta de Descargas):</p>
+<pre class="bash"><code># Borrar el contenido de la carpeta Descargas (método 1)
+rm -rf Descargas/*</code></pre>
+<h2 id="-eliminar-directorios-vacíos-el-comando-rmdir">📂 Eliminar
+directorios vacíos. El comando <code>rmdir</code></h2>
+<p>El comando <code>rmdir</code> elimina únicamente directorios
+<strong>vacíos</strong>, lo que lo convierte en una opción más segura
+que <code>rm -r</code>.</p>
+<pre class="bash"><code># Eliminar un directorio vacío
+rmdir DirectorioVacio</code></pre>
+<p>Si el directorio contiene archivos, el comando devolverá un error y
+no eliminará nada. En ese caso deberemos usar <code>rm -r</code> tal y
+como hemos visto en ejemplos anteriores.</p>
+<p><img src="/assets/rmdir_error_ejemplo.png" alt="Error rmdir" /></p>
+<h2 id="-ejemplo-organizar-material-de-clase">💡 Ejemplo: Organizar
+material de clase</h2>
+<p>Supongamos que somos docentes y queremos organizar el material para
+nuestro curso. Seguiríamos el siguiente orden:</p>
+<pre class="bash"><code># 1. Verificar dónde nos encontramos
+pwd</code></pre>
+<pre class="bash"><code># 2. Crear la estructura de directorios
+mkdir -p Cursos/Python/2026/Practicas
+mkdir -p Cursos/Python/2026/Ejercicios</code></pre>
+<pre class="bash"><code># 3. Verificar que se ha creado la estructura
+ls -R Cursos</code></pre>
+<pre class="bash"><code># 4. Crear archivos de ejemplo dentro de la estructura
+touch Cursos/Python/2026/tema01_introduccion.md 
+touch Cursos/Python/2026/tema02_variables.md
+touch Cursos/Python/2026/Practicas/practica01.txt
+touch Cursos/Python/2026/Ejercicios/ejercicio01.txt</code></pre>
+<p><img src="/assets/ejemplo_organizacion.png"
+alt="Ejemplo organización" /></p>
+<pre class="bash"><code># 5. Copiar un archivo de plantilla a cada práctica
+cp plantilla_practica.txt Cursos/Python/2026/Practicas/practica01.txt</code></pre>
+<pre class="bash"><code># 6. Renombrar un archivo
+mv Cursos/Python/2026/tema01_introduccion.md Cursos/Python/2026/01_introduccion.md</code></pre>
+<pre class="bash"><code># 7. Eliminar un archivo temporal
+rm Cursos/Python/2026/Practicas/practica01_borrador.txt</code></pre>
+<pre class="bash"><code># 8. Verificar la estructura final
+ls -R Cursos</code></pre>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>touch</code></td>
+<td style="text-align: left;">Crea un archivo vacío o actualiza su
+fecha</td>
+<td style="text-align: left;"><code>touch nota.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mkdir</code></td>
+<td style="text-align: left;">Crea un directorio</td>
+<td style="text-align: left;"><code>mkdir MisClases</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>mkdir -p</code></td>
+<td style="text-align: left;">Crea directorios anidados</td>
+<td style="text-align: left;"><code>mkdir -p A/B/C</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cp</code></td>
+<td style="text-align: left;">Copia un archivo</td>
+<td style="text-align: left;"><code>cp archivo.txt destino/</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cp -r</code></td>
+<td style="text-align: left;">Copia un directorio y su contenido</td>
+<td
+style="text-align: left;"><code>cp -r MiDirectorio destino/</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mv</code></td>
+<td style="text-align: left;">Mueve o renombra archivos y
+directorios</td>
+<td style="text-align: left;"><code>mv archivo.txt nuevo.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rm</code></td>
+<td style="text-align: left;">Elimina archivos</td>
+<td style="text-align: left;"><code>rm archivo.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>rm -i</code></td>
+<td style="text-align: left;">Elimina con confirmación</td>
+<td style="text-align: left;"><code>rm -i archivo.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rm -r</code></td>
+<td style="text-align: left;">Elimina directorios y su contenido</td>
+<td style="text-align: left;"><code>rm -r MiDirectorio</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>rmdir</code></td>
+<td style="text-align: left;">Elimina directorios vacíos</td>
+<td style="text-align: left;"><code>rmdir DirVacio</code></td>
+</tr>
+</tbody>
+</table>

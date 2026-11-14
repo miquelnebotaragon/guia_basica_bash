@@ -1,0 +1,391 @@
+<h1 id="la-consola-de-comandos-parte-ix">La consola de comandos. Parte
+IX</h1>
+<h2 id="-permisos-y-usuarios">🔐 Permisos y usuarios</h2>
+<p>En el módulo 02 ya vimos de forma básica cómo interpretar los
+permisos que muestra <code>ls -l</code>. En este módulo profundizaremos
+en ellos y aprenderemos a <strong>modificar permisos y
+propietarios</strong> de archivos y directorios.</p>
+<p>Cada archivo y directorio en Linux dispone de tres tipos de permisos
+y tres conjuntos de usuarios que pueden tenerlos asignados.</p>
+<h2 id="-quién-puede-acceder-a-un-archivo">👥 ¿Quién puede acceder a un
+archivo?</h2>
+<p>Los permisos se organizan en tres bloques, tal como ya hemos
+visto:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Bloque</th>
+<th style="text-align: left;">Se refiere a</th>
+<th style="text-align: left;">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Usuario</td>
+<td style="text-align: left;">Propietario</td>
+<td style="text-align: left;">La persona que creó el archivo o
+directorio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Grupo</td>
+<td style="text-align: left;">Grupo</td>
+<td style="text-align: left;">Un conjunto de usuarios que comparten
+permisos</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Otros</td>
+<td style="text-align: left;">Otros usuarios</td>
+<td style="text-align: left;">Cualquier otro usuario del sistema</td>
+</tr>
+</tbody>
+</table>
+<p>Cuando ejecutamos <code>ls -l</code>, vemos estos bloques
+representados así:</p>
+<pre class="bash"><code>-rwxr-xr-- 1 mnebot profesores 4096 mar  9 10:00 notas.txt
+ │││ ││ ││
+ │││ ││ └───── Otros: r-- (lectura)
+ │││ └──────── Grupo: r-x (lectura y ejecución)
+ └──────────── Usuario: rwx (lectura, escritura y ejecución)</code></pre>
+<h2 id="-qué-significan-r-w-y-x">📖 ¿Qué significan r, w y x?</h2>
+<p>Recordamos aquí los conceptos introducidos en el módulo 02:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Permiso</th>
+<th style="text-align: left;">En archivos</th>
+<th style="text-align: left;">En directorios</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>r</code> (<em>read</em>)</td>
+<td style="text-align: left;">Ver el contenido del archivo</td>
+<td style="text-align: left;">Listar los archivos del directorio
+(<code>ls</code>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>w</code> (<em>write</em>)</td>
+<td style="text-align: left;">Modificar el archivo</td>
+<td style="text-align: left;">Crear, eliminar o renombrar archivos
+dentro del directorio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>x</code> (<em>execute</em>)</td>
+<td style="text-align: left;">Ejecutar el archivo como programa</td>
+<td style="text-align: left;">Entrar en el directorio
+(<code>cd</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ En los directorios, el permiso <code>x</code> es fundamental. Sin
+él, no podemos acceder al directorio ni consultar sus archivos, aunque
+tengamos permiso de lectura <code>r</code>. De igual modo, para crear o
+eliminar archivos dentro de un directorio necesitamos disponer <strong>a
+la vez</strong> de <code>w</code> y de <code>x</code> sobre ese
+directorio.</p>
+<h2 id="-permisos-en-formato-numérico">🔢 Permisos en formato
+numérico</h2>
+<p>Cada permiso tiene un valor numérico:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Permiso</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>r</code></td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>w</code></td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>x</code></td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-</code></td>
+<td style="text-align: left;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Los tres bloques se suman para formar un número de tres dígitos:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Combinación</th>
+<th style="text-align: left;">Cálculo</th>
+<th style="text-align: left;">Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>rwx</code></td>
+<td style="text-align: left;">4+2+1 = 7</td>
+<td style="text-align: left;">Lectura, escritura y ejecución</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>r-x</code></td>
+<td style="text-align: left;">4+0+1 = 5</td>
+<td style="text-align: left;">Lectura y ejecución</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rw-</code></td>
+<td style="text-align: left;">4+2+0 = 6</td>
+<td style="text-align: left;">Lectura y escritura</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>r--</code></td>
+<td style="text-align: left;">4+0+0 = 4</td>
+<td style="text-align: left;">Solo lectura</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>---</code></td>
+<td style="text-align: left;">0+0+0 = 0</td>
+<td style="text-align: left;">Sin permisos</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-ejemplo-descomposición-de-permisos-en-números">💡 Ejemplo:
+Descomposición de permisos en números</h3>
+<pre class="bash"><code># Al comenzar por guion, sabemos que se trata de un archivo y no de un directorio.
+-rwxr-xr--</code></pre>
+<p>Se descompone en:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Bloque</th>
+<th style="text-align: left;">Permisos</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Usuario</td>
+<td style="text-align: left;"><code>rwx</code></td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Grupo</td>
+<td style="text-align: left;"><code>r-x</code></td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Otros</td>
+<td style="text-align: left;"><code>r--</code></td>
+<td style="text-align: left;">4</td>
+</tr>
+</tbody>
+</table>
+<p>El valor numérico completo sería: <strong>754</strong>. A
+continuación veremos para qué sirve conocer el valor numérico en cuanto
+a permisos de un archivo o directorio.</p>
+<h2 id="-cambiar-permisos-el-comando-chmod">🔧 Cambiar permisos. El
+comando <code>chmod</code></h2>
+<p>El comando <code>chmod</code> (<em>change mode</em>) permite
+modificar los permisos de archivos y directorios. Existen dos maneras de
+cambiar los permisos: el <strong>modo numérico</strong> (mediante
+números) y el <strong>modo simbólico</strong> (mediante letras).</p>
+<h3 id="sintaxis">Sintaxis</h3>
+<pre class="bash"><code>chmod [opciones] archivo</code></pre>
+<h3 id="modo-numérico-octal">Modo numérico (octal)</h3>
+<p>Utiliza los valores numéricos para establecer permisos de forma
+directa:</p>
+<pre class="bash"><code>chmod 755 script.sh</code></pre>
+<p>Este comando establece:</p>
+<ul>
+<li>Usuario: <code>rwx</code> (7), es decir, el propietario tendrá
+permiso de lectura, escritura y ejecución.</li>
+<li>Grupo: <code>r-x</code> (5), es decir, los miembros del grupo podrán
+leerlo y ejecutarlo.</li>
+<li>Otros: <code>r-x</code> (5), es decir, el resto de usuarios podrá
+también leerlo y ejecutarlo.</li>
+</ul>
+<h3 id="-ejemplos-con-modo-numérico">💡 Ejemplos con modo numérico</h3>
+<pre class="bash"><code># Solo el propietario puede leer y escribir
+chmod 600 archivo_privado.txt
+
+# Todos pueden leer, solo el propietario puede escribir
+chmod 644 documento_publico.txt
+
+# El propietario tiene control total (leer, escribir y ejecutar), grupo y otros lectura y ejecución
+chmod 755 mi_script.sh
+</code></pre>
+<h3 id="permisos-comunes-y-su-uso-habitual">Permisos comunes y su uso
+habitual</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Valor</th>
+<th style="text-align: left;">Permisos</th>
+<th style="text-align: left;">Uso típico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>755</code></td>
+<td style="text-align: left;"><code>rwxr-xr-x</code></td>
+<td style="text-align: left;">Scripts ejecutables, directorios
+compartidos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>644</code></td>
+<td style="text-align: left;"><code>rw-r--r--</code></td>
+<td style="text-align: left;">Archivos de lectura pública</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>700</code></td>
+<td style="text-align: left;"><code>rwx------</code></td>
+<td style="text-align: left;">Directorios privados del usuario</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>600</code></td>
+<td style="text-align: left;"><code>rw-------</code></td>
+<td style="text-align: left;">Archivos privados (claves SSH,
+contraseñas)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>777</code></td>
+<td style="text-align: left;"><code>rwxrwxrwx</code></td>
+<td style="text-align: left;">⚠️ Acceso total para todos (usar con mucha
+precaución)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="modo-simbólico">Modo simbólico</h3>
+<p>El modo simbólico permite añadir, quitar o asignar permisos concretos
+sin tener que recalcular el número octal. Se compone de tres partes:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">¿A quién?</th>
+<th style="text-align: left;">Operador</th>
+<th style="text-align: left;">¿Qué permiso?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>u</code> (usuario) / <code>g</code>
+(grupo) / <code>o</code> (otros) / <code>a</code> (todos)</td>
+<td style="text-align: left;"><code>+</code> añade, <code>-</code>
+quita, <code>=</code> asigna exactamente</td>
+<td style="text-align: left;"><code>r</code> / <code>w</code> /
+<code>x</code></td>
+</tr>
+</tbody>
+</table>
+<pre class="bash"><code># Añade permiso de ejecución al propietario
+chmod u+x script.sh
+
+# Quita permiso de escritura a &quot;otros&quot;
+chmod o-w notas.txt
+
+# Asigna al grupo únicamente lectura y ejecución
+chmod g=rx script.sh</code></pre>
+<h3
+id="modificar-permisos-de-un-directorio-y-su-contenido-con--r">Modificar
+permisos de un directorio y su contenido con <code>-R</code></h3>
+<p>Para aplicar los permisos de forma recursiva a un directorio y todo
+lo que contiene:</p>
+<pre class="bash"><code>chmod -R 755 mi_directorio</code></pre>
+<p>⚠️ En <code>chmod</code> (y también en <code>chown</code> y
+<code>chgrp</code>) la opción recursiva es <strong><code>-R</code> en
+mayúscula</strong>. A diferencia de <code>rm</code> o <code>cp</code>,
+que aceptan <code>-r</code> minúscula, en estos comandos la minúscula no
+funciona.</p>
+<h2 id="-cambiar-el-propietario-el-comando-chown">👤 Cambiar el
+propietario. El comando <code>chown</code></h2>
+<p>El comando <code>chown</code> (<em>change owner</em>) permite cambiar
+el propietario y/o el grupo de un archivo o directorio.</p>
+<h3 id="cambiar-el-propietario">Cambiar el propietario</h3>
+<pre class="bash"><code>chown usuario archivo</code></pre>
+<h3 id="-ejemplo-cambio-de-propietario-de-un-archivo">💡 Ejemplo: Cambio
+de propietario de un archivo</h3>
+<pre class="bash"><code># Cambiar el propietario del archivo a &quot;ana&quot;
+chown ana notas.txt</code></pre>
+<h3 id="cambiar-el-propietario-y-el-grupo">Cambiar el propietario y el
+grupo</h3>
+<pre class="bash"><code>chown usuario:grupo archivo</code></pre>
+<h3 id="-ejemplo-cambio-de-propietario-y-de-grupo">💡 Ejemplo: Cambio de
+propietario y de grupo</h3>
+<pre class="bash"><code># Cambiar propietario a &quot;ana&quot; y grupo a &quot;profesorado&quot;
+chown ana:profesorado notas.txt</code></pre>
+<h3 id="cambiar-el-grupo-únicamente-con-chgrp">Cambiar el grupo
+únicamente con <code>chgrp</code></h3>
+<p>Si solo necesitamos cambiar el grupo, podemos usar
+<code>chgrp</code>:</p>
+<pre class="bash"><code>chgrp profesorado notas.txt</code></pre>
+<h3 id="cambiar-propietario-de-forma-recursiva-con--r">Cambiar
+propietario de forma recursiva con <code>-R</code></h3>
+<p>Para aplicar el cambio a un directorio y todo su contenido:</p>
+<pre class="bash"><code>chown -R ana:profesorado mi_directorio</code></pre>
+<h2 id="-grupos-de-usuarios">👥 Grupos de usuarios</h2>
+<p>En Linux, los usuarios pueden pertenecer a <strong>grupos</strong>.
+Los grupos permiten gestionar permisos de forma colectiva, sin necesidad
+de asignarlos uno por uno a cada usuario.</p>
+<h3 id="consultar-los-grupos-del-usuario-actual">Consultar los grupos
+del usuario actual</h3>
+<pre class="bash"><code>groups</code></pre>
+<p><img src="/assets/groups.png" alt="Grupos del usuario actual" /></p>
+<h3 id="consultar-los-grupos-de-un-usuario-concreto">Consultar los
+grupos de un usuario concreto</h3>
+<pre class="bash"><code>groups nombre_usuario</code></pre>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>chmod 755 archivo</code></td>
+<td style="text-align: left;">Cambia permisos en modo numérico</td>
+<td style="text-align: left;"><code>chmod 755 script.sh</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chmod u+x archivo</code></td>
+<td style="text-align: left;">Añade ejecución al propietario</td>
+<td style="text-align: left;"><code>chmod u+x script.sh</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>chmod o-w archivo</code></td>
+<td style="text-align: left;">Quita escritura a otros</td>
+<td style="text-align: left;"><code>chmod o-w notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>chmod -R 755 dir</code></td>
+<td style="text-align: left;">Cambia permisos recursivamente</td>
+<td
+style="text-align: left;"><code>chmod -R 755 mi_directorio</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>chown usuario archivo</code></td>
+<td style="text-align: left;">Cambia el propietario</td>
+<td style="text-align: left;"><code>chown ana notas.txt</code></td>
+</tr>
+<tr class="even">
+<td
+style="text-align: left;"><code>chown usuario:grupo archivo</code></td>
+<td style="text-align: left;">Cambia propietario y grupo</td>
+<td
+style="text-align: left;"><code>chown ana:profesorado notas.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>chgrp grupo archivo</code></td>
+<td style="text-align: left;">Cambia solo el grupo</td>
+<td
+style="text-align: left;"><code>chgrp profesorado notas.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>groups</code></td>
+<td style="text-align: left;">Muestra los grupos del usuario</td>
+<td style="text-align: left;"><code>groups</code></td>
+</tr>
+</tbody>
+</table>

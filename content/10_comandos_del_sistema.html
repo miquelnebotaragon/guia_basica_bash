@@ -1,0 +1,350 @@
+<h1 id="la-consola-de-comandos-parte-x">La consola de comandos. Parte
+X</h1>
+<h2 id="-comandos-del-sistema">💻 Comandos del sistema</h2>
+<p>En los módulos anteriores hemos aprendido a gestionar archivos,
+directorios, permisos y texto. En este módulo veremos comandos que nos
+permiten <strong>obtener información sobre el sistema</strong> en el que
+estamos trabajando y <strong>gestionar los procesos</strong> que se
+están ejecutando.</p>
+<p>Estos comandos resultan especialmente útiles para diagnosticar
+problemas, comprobar el estado del equipo o gestionar la ejecución de
+programas.</p>
+<h2 id="️-información-del-sistema-el-comando-uname">🖥️ Información del
+sistema. El comando <code>uname</code></h2>
+<p>El comando <code>uname</code> (<em>Unix name</em>) muestra
+información sobre el sistema operativo.</p>
+<h3 id="mostrar-el-nombre-del-sistema">Mostrar el nombre del
+sistema</h3>
+<pre class="bash"><code>uname</code></pre>
+<p>Resultado típico:</p>
+<pre class="text"><code>Linux</code></pre>
+<h3 id="mostrar-toda-la-información-con-uname--a">Mostrar toda la
+información con <code>uname -a</code></h3>
+<p>La opción <code>-a</code> (<em>all</em>) muestra toda la información
+disponible:</p>
+<pre class="bash"><code>uname -a</code></pre>
+<p><img src="/assets/uname.png" alt="Ejemplo uname -a" /></p>
+<h3 id="opciones-útiles-de-uname">Opciones útiles de
+<code>uname</code></h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Opción</th>
+<th style="text-align: left;">Información que muestra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>-s</code></td>
+<td style="text-align: left;">Nombre del sistema operativo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-r</code></td>
+<td style="text-align: left;">Versión del kernel</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-v</code></td>
+<td style="text-align: left;">Fecha de compilación del kernel</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-m</code></td>
+<td style="text-align: left;">Arquitectura del procesador (x86_64,
+arm64...)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-n</code></td>
+<td style="text-align: left;">Nombre del equipo (hostname)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/assets/uname_principales_opciones.png"
+alt="Uname, principales opciones" /></p>
+<h2 id="-espacio-en-disco-el-comando-df">💾 Espacio en disco. El comando
+<code>df</code></h2>
+<p>El comando <code>df</code> (<em>disk free</em>) muestra el espacio
+disponible en los sistemas de archivos montados.</p>
+<h3 id="mostrar-el-espacio-en-formato-legible">Mostrar el espacio en
+formato legible</h3>
+<pre class="bash"><code>df -h</code></pre>
+<p>La opción <code>-h</code> (<em>human-readable</em>) muestra los
+tamaños en unidades comprensibles (KB, MB, GB).</p>
+<p>Resultado típico:</p>
+<pre class="text"><code>S.ficheros     Tamaño Usados  Disp Uso% Montado en
+/dev/sda1        50G    12G   36G  25% /
+tmpfs           3,9G       0  3,9G   0% /dev/shm
+/dev/sda2       200G    85G  105G  45% /home</code></pre>
+<h3 id="-ejemplo-comprobar-el-espacio-de-una-ruta-concreta">💡 Ejemplo:
+Comprobar el espacio de una ruta concreta</h3>
+<pre class="bash"><code>df -h /home/usuario</code></pre>
+<p>Este comando muestra el sistema de archivos donde se encuentra
+montado el directorio indicado.</p>
+<h2 id="-tamaño-de-directorios-el-comando-du">📂 Tamaño de directorios.
+El comando <code>du</code></h2>
+<p>El comando <code>du</code> (<em>disk usage</em>) muestra el espacio
+ocupado por archivos y directorios.</p>
+<h3 id="mostrar-el-tamaño-de-un-directorio">Mostrar el tamaño de un
+directorio</h3>
+<p>Mediante el comando <code>du -h</code> veremos el contenido de un
+directorio y el <em>peso</em> de cada uno de sus archivos y
+directorios.</p>
+<pre class="bash"><code>du -h Documentos</code></pre>
+<h3 id="mostrar-solo-el-total-con--s">Mostrar solo el total con
+<code>-s</code></h3>
+<p>La opción <code>-s</code> (<em>summary</em>) muestra únicamente el
+total del directorio indicado:</p>
+<pre class="bash"><code>du -sh Documentos</code></pre>
+<p><img src="/assets/tamano_directorio_resumen.png"
+alt="Tamaño de un directorio (resumen)" /></p>
+<h3 id="-ejemplo-ver-los-directorios-más-pesados">💡 Ejemplo: Ver los
+directorios más pesados</h3>
+<p>Mediante el uso de tuberías podemos ejecutar anidados diversos
+comandos:</p>
+<pre class="bash"><code>du -sh */ | sort -rh</code></pre>
+<p>Este comando:</p>
+<ol type="1">
+<li>Muestra el tamaño de cada subdirectorio del directorio actual.</li>
+<li>Ordena el resultado de mayor a menor tamaño.</li>
+</ol>
+<h2 id="-memoria-del-sistema-el-comando-free">🧠 Memoria del sistema. El
+comando <code>free</code></h2>
+<p>El comando <code>free</code> muestra el uso de la memoria RAM y del
+espacio de intercambio (<em>swap</em>).</p>
+<h3 id="mostrar-la-memoria-en-formato-legible">Mostrar la memoria en
+formato legible</h3>
+<pre class="bash"><code>free -h</code></pre>
+<p><img src="/assets/uso_memoria_free.png"
+alt="Uso de memoria con el comando free" /></p>
+<h2 id="️-procesos-en-ejecución-el-comando-ps">⚙️ Procesos en ejecución.
+El comando <code>ps</code></h2>
+<p>El comando <code>ps</code> (<em>process status</em>) muestra los
+procesos que se están ejecutando en el sistema.</p>
+<h3 id="mostrar-los-procesos-del-usuario-actual">Mostrar los procesos
+del usuario actual</h3>
+<pre class="bash"><code>ps</code></pre>
+<p>Resultado típico:</p>
+<pre class="text"><code>  PID TTY          TIME CMD
+ 1234 pts/0    00:00:00 bash
+ 5678 pts/0    00:00:00 ps</code></pre>
+<h3 id="mostrar-todos-los-procesos-del-sistema">Mostrar todos los
+procesos del sistema</h3>
+<pre class="bash"><code>ps -e</code></pre>
+<h3 id="mostrar-información-detallada-con-ps--ef">Mostrar información
+detallada con <code>ps -ef</code></h3>
+<p>La opción <code>-f</code> (<em>full</em>) muestra información
+extendida:</p>
+<pre class="bash"><code>ps -ef</code></pre>
+<p>Resultado típico:</p>
+<pre class="text"><code>UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 mar09 ?        00:00:01 /sbin/init
+root         2     0  0 mar09 ?        00:00:00 [kthreadd]
+usuario   1234  1100  0 mar09 pts/0    00:00:00 bash</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Columna</th>
+<th style="text-align: left;">Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>UID</code></td>
+<td style="text-align: left;">Usuario propietario del proceso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>PID</code></td>
+<td style="text-align: left;">Identificador único del proceso</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>PPID</code></td>
+<td style="text-align: left;">PID del proceso padre</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>STIME</code></td>
+<td style="text-align: left;">Hora de inicio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>TTY</code></td>
+<td style="text-align: left;">Terminal desde el que se ejecuta</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>CMD</code></td>
+<td style="text-align: left;">Comando o programa ejecutado</td>
+</tr>
+</tbody>
+</table>
+<h2 id="-monitorización-en-tiempo-real-el-comando-top">📊 Monitorización
+en tiempo real. El comando <code>top</code></h2>
+<p>El comando <code>top</code> muestra los procesos del sistema en
+tiempo real, actualizándose periódicamente.</p>
+<pre class="bash"><code>top</code></pre>
+<p>La pantalla de <code>top</code> muestra:</p>
+<ul>
+<li>En la parte superior: información general del sistema (tiempo de
+actividad, número de usuarios, carga del sistema, uso de memoria).</li>
+<li>En la parte inferior: lista de procesos ordenados por consumo de
+recursos.</li>
+</ul>
+<h3 id="controles-básicos-de-top">Controles básicos de
+<code>top</code></h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tecla</th>
+<th style="text-align: left;">Acción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>q</code></td>
+<td style="text-align: left;">Salir de <code>top</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>k</code></td>
+<td style="text-align: left;">Terminar un proceso (pide el PID)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>M</code></td>
+<td style="text-align: left;">Ordenar por uso de memoria</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>P</code></td>
+<td style="text-align: left;">Ordenar por uso de CPU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>h</code></td>
+<td style="text-align: left;">Mostrar ayuda</td>
+</tr>
+</tbody>
+</table>
+<h2 id="-terminar-un-proceso-el-comando-kill">❌ Terminar un proceso. El
+comando <code>kill</code></h2>
+<p>El comando <code>kill</code> envía una señal a un proceso,
+habitualmente para terminarlo.</p>
+<h3 id="terminar-un-proceso-de-forma-ordenada">Terminar un proceso de
+forma ordenada</h3>
+<pre class="bash"><code>kill PID</code></pre>
+<p>Esta señal (<code>SIGTERM</code>) permite al proceso cerrarse de
+forma limpia, guardando datos si es necesario.</p>
+<h3 id="forzar-la-terminación-de-un-proceso">Forzar la terminación de un
+proceso</h3>
+<pre class="bash"><code>kill -9 PID</code></pre>
+<p>La señal <code>SIGKILL</code> (<code>-9</code>) obliga al sistema a
+terminar el proceso inmediatamente. Se utiliza cuando un proceso no
+responde a la señal normal.</p>
+<p>⚠️ <code>kill -9</code> no permite al proceso guardar su estado. Usar
+solo como último recurso.</p>
+<h3 id="-ejemplo-terminar-un-proceso-concreto">💡 Ejemplo: Terminar un
+proceso concreto</h3>
+<pre class="bash"><code># Buscar el PID de un proceso
+ps -ef | grep firefox
+
+# Terminar el proceso (supongamos que el PID es 3456)
+kill 3456
+
+# Si no responde, forzar la terminación
+kill -9 3456</code></pre>
+<h2 id="-otros-comandos-útiles-del-sistema">📋 Otros comandos útiles del
+sistema</h2>
+<h3 id="ver-el-nombre-del-equipo">Ver el nombre del equipo</h3>
+<pre class="bash"><code>hostname</code></pre>
+<h3 id="ver-la-fecha-y-hora-del-sistema">Ver la fecha y hora del
+sistema</h3>
+<p>Una fecha u hora incorrectas en nuestro sistema pueden conllevar
+funcionamiento errático del equipo. Podemos así comprobar la fecha y
+hora reales del sistema:</p>
+<pre class="bash"><code>date</code></pre>
+<h3 id="ver-cuánto-tiempo-lleva-encendido-el-sistema">Ver cuánto tiempo
+lleva encendido el sistema</h3>
+<pre class="bash"><code>uptime</code></pre>
+<h3 id="ver-quién-está-conectado">Ver quién está conectado</h3>
+<pre class="bash"><code>who</code></pre>
+<h2 id="-resumen-de-comandos">📋 Resumen de comandos</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Para qué sirve</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>uname -a</code></td>
+<td style="text-align: left;">Muestra toda la información del
+sistema</td>
+<td style="text-align: left;"><code>uname -a</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uname -m</code></td>
+<td style="text-align: left;">Muestra la arquitectura del
+procesador</td>
+<td style="text-align: left;"><code>uname -m</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>df -h</code></td>
+<td style="text-align: left;">Muestra el espacio en disco en formato
+legible</td>
+<td style="text-align: left;"><code>df -h</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>du -sh dir</code></td>
+<td style="text-align: left;">Muestra el tamaño total de un
+directorio</td>
+<td style="text-align: left;"><code>du -sh ~</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>free -h</code></td>
+<td style="text-align: left;">Muestra el uso de memoria RAM y swap</td>
+<td style="text-align: left;"><code>free -h</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ps</code></td>
+<td style="text-align: left;">Muestra los procesos del usuario
+actual</td>
+<td style="text-align: left;"><code>ps</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ps -ef</code></td>
+<td style="text-align: left;">Muestra todos los procesos del
+sistema</td>
+<td style="text-align: left;"><code>ps -ef</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>top</code></td>
+<td style="text-align: left;">Monitorización de procesos en tiempo
+real</td>
+<td style="text-align: left;"><code>top</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>kill PID</code></td>
+<td style="text-align: left;">Termina un proceso de forma ordenada</td>
+<td style="text-align: left;"><code>kill 1234</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>kill -9 PID</code></td>
+<td style="text-align: left;">Fuerza la terminación de un proceso</td>
+<td style="text-align: left;"><code>kill -9 1234</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>hostname</code></td>
+<td style="text-align: left;">Muestra el nombre del equipo</td>
+<td style="text-align: left;"><code>hostname</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>date</code></td>
+<td style="text-align: left;">Muestra la fecha y hora del sistema</td>
+<td style="text-align: left;"><code>date</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uptime</code></td>
+<td style="text-align: left;">Muestra el tiempo de actividad del
+sistema</td>
+<td style="text-align: left;"><code>uptime</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>who</code></td>
+<td style="text-align: left;">Muestra los usuarios conectados</td>
+<td style="text-align: left;"><code>who</code></td>
+</tr>
+</tbody>
+</table>
